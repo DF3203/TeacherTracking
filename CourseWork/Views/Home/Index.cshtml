@@ -1,8 +1,72 @@
 ﻿@{
     ViewData["Title"] = "Курсова робота";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+	<title>Авторизація</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="~/images/icons/favicon.ico"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="~/css/util.css">
+	<link rel="stylesheet" type="text/css" href="~/css/main.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="~/lib/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="~/lib/css-hamburgers/hamburgers.min.css">
+</head>
+<body onload="checkUser()">
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/img-02.jpg');">
+			<div class="wrap-login100 p-t-150 p-b-30">
+				<form class="login100-form validate-form">
+					<div class="login100-form-avatar">
+						<img src="images/logo_black.svg" alt="logo">
+					</div>
+
+					<span class="login100-form-title p-t-20 p-b-40">
+						Система контролю рейтингу викладачів ОНТУ
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-10" data-validate = "Спробуйте ще раз">
+						<input class="input100" type="text" name="username" placeholder="Ім'я користувача">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-10" data-validate = "Спробуйте ще раз">
+						<input class="input100" type="password" name="pass" placeholder="Пароль">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock"></i>
+						</span>
+					</div>
+
+					<div class="container-login100-form-btn p-t-10">
+						<button class="login100-form-btn" type="button" onclick="onLoginClick()">
+							Увійти
+						</button>
+					</div>
+
+					<div class="text-center w-full p-t-25 p-b-230">
+						<a href="#" class="txt1">
+							Докладніше про систему
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<script src="~/lib/bootstrap/dist/js/popper.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="~/js/common.js"></script>
+	<script src="~/js/authorization.js"></script>
+	<script src="~/lib/jquery/jquery-3.2.1.min.js"></script>
+</body>
+</html>
