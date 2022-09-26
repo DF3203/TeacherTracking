@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "hbjEt54rLRIHHK+8yJwd+HYvZzGbtGbUAAPSAsmfGanrBARhLnvu7L0qAlOzTXV9QzaDtBhsKJixSgalUp4a4w==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\CourseWork\\CourseWork\\CourseWork.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\viach\\.nuget\\packages\\npgsql\\6.0.6\\npgsql.6.0.6.nupkg.sha512",
+    "C:\\Users\\viach\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
