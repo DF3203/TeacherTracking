@@ -1,56 +1,4 @@
 
-//(function ($) {
-//    "use strict";
-
-//    /*==================================================================
-//    [ Validate ]*/
-//    var input = $('.validate-input .input100');
-
-//    $('.validate-form').on('button',function(){
-//        var check = true;
-//        for(var i=0; i<input.length; i++) {
-//            if(validate(input[i]) == false){
-//                showValidate(input[i]);
-//                check=false;
-//            }
-//        }
-
-//        return check;
-//    });
-
-//    $('.validate-form .input100').each(function(){
-//        $(this).focus(function(){
-//           hideValidate(this);
-//        });
-//    });
-
-//    function validate (input) {
-//        if($(input).attr('type') == 'text' || $(input).attr('name') == 'email') {
-//            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-//                return false;
-//            }
-//        }
-//        else {
-//            if($(input).val().trim() == ''){
-//                return false;
-//            }
-//        }
-//    }
-
-//    function showValidate(input) {
-//        var thisAlert = $(input).parent();
-
-//        $(thisAlert).addClass('alert-validate');
-//    }
-
-//    function hideValidate(input) {
-//        var thisAlert = $(input).parent();
-
-//        $(thisAlert).removeClass('alert-validate');
-//    }
-
-//})(jQuery);
-
 //function checkUser()
 //{
 //    if (getCookie("user") !== undefined && getCookie("id_user") !== undefined)
@@ -59,24 +7,26 @@
 
 const button = document.querySelector(".login100-form-btn");
 
-button.addEventListener("click", onLoginClick());
+button.addEventListener("click", onLoginClick);
+
+const login = document.querySelector('input[name="login"]');
+const password = document.querySelector('input[name="pass"]');
+
+const onLoginInput = () => {
+    if (login.value.length < 6) login.parentNode.classList.add('alert-validate');
+    else login.parentNode.classList.remove('alert-validate');
+}
+
+const onPasswordInput = () => {
+    if (password.value.length < 8) password.parentNode.classList.add('alert-validate');
+    else password.parentNode.classList.remove('alert-validate');
+}
+
+login.addEventListener("input", onLoginInput)
+password.addEventListener("input", onPasswordInput)
 
 function onLoginClick()
 {
-    let login = document.getElementsByName("email")[0];
-    let password = document.getElementsByName("pass")[0];
-
-    let input = $('.validate-input .input100');
-
-    if (login.value.toString().length === 0 || (password.value.toString().length === 0))
-    {
-       $($(input).parent()).addClass('alert-validate');
-       login.value = "";
-       password.value = "";
-       return;
-    }
-
-
 //    let request_CheckLogin = new XMLHttpRequest();
 //    request_CheckLogin.onreadystatechange = function ()
 //    {
