@@ -26,5 +26,5 @@ password.addEventListener("input", onPasswordInput);
 {
      const res = await fetch("https://localhost:7113/Home/LogIn?login=" + login.value + "&password=" + password.value);
      const data = await res.json();
-     alert(data);
+     alert (data);
 }
