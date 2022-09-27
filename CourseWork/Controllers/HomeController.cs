@@ -19,11 +19,21 @@ namespace CourseWork.Controllers
             return View();
         }
 
-        public Object LogIn(string login, string password)
+        public object LogIn(string login, string password)
         {
-            NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM checkuser({login},{password})", DataBase._connection);
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM checkuser('{login}','{password}')", DataBase._connection);
+            DataBase._connection.Open();
             NpgsqlDataReader reader = command.ExecuteReader();
-            return reader.Read();
+            object result = new object();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                    result = reader.GetValue(0);
+            }
+            else result = false;
+            DataBase._connection.Close();
+            _logger.LogInformation($"Attempt to log in with username {login} and password {password}");
+            return result;
         }
 
         public IActionResult Privacy()
