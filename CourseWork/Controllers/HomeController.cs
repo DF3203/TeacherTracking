@@ -18,7 +18,8 @@ namespace CourseWork.Controllers
         {
             return View();
         }
-        private object LogIn(string login, string password)
+
+        public object LogIn(string login, string password)
         {
             NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM checkuser('{login}','{password}')", DataBase._connection);
             DataBase._connection.Open();
