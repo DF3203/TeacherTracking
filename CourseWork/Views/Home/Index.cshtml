@@ -2,7 +2,6 @@
     ViewData["Title"] = "Курсова робота";
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -18,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="~/lib/animate/animate.css">
 	<link rel="stylesheet" type="text/css" href="~/lib/css-hamburgers/hamburgers.min.css">
 </head>
-<body onload="checkUser()">
+<body>
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/img-02.jpg');">
 			<div class="wrap-login100 p-t-150 p-b-30">
@@ -48,7 +47,7 @@
 					</div>
 
 					<div class="container-login100-form-btn p-t-10">
-						<button class="login100-form-btn" type="button" onclick="onLoginClick()">
+						<button class="login100-form-btn" type="button">
 							Увійти
 						</button>
 					</div>
@@ -63,9 +62,8 @@
 		</div>
 	</div>
 </body>
-<script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/bootstrap/dist/js/popper.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="~/js/common.js"></script>
-<script src="~/js/authorization.js"></script>
+<script src="~/js/common.js" type="module"></script>
+<script src="~/js/authorization.js" type="module"></script>
 </html>
