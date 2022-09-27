@@ -1,9 +1,6 @@
-
-//function checkUser()
-//{
-//    if (getCookie("user") !== undefined && getCookie("id_user") !== undefined)
-// window.location = "mainPage.html";
-//}
+import * as Cookies from "./cookies.js";
+if (Cookies.getCookie("user") !== undefined && Cookies.getCookie("id_user") !== undefined)
+window.location = "mainPage.cshtml";
 
 const button = document.querySelector(".login100-form-btn");
 
@@ -22,25 +19,18 @@ const onPasswordInput = () => {
     else password.parentNode.classList.remove('alert-validate');
 }
 
-login.addEventListener("input", onLoginInput)
-password.addEventListener("input", onPasswordInput)
+login.addEventListener("input", onLoginInput);
+password.addEventListener("input", onPasswordInput);
 
 function onLoginClick()
 {
+    alert("1");
 //    let request_CheckLogin = new XMLHttpRequest();
 //    request_CheckLogin.onreadystatechange = function ()
 //    {
 //        if (this.readyState === 4 && this.status === 200)
 //        {
 //            let user = JSON.parse(this.responseText);
-//            console.log(user);
-//            if (user === false)
-//            {
-//                $($(input).parent()).addClass('alert-validate');
-//                ($(input).parent()).dataset;
-//                login.value = "";
-//                password.value = "";
-//            }
 //            else
 //            {
 //                let request_GetID = new XMLHttpRequest();

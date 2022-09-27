@@ -1,6 +1,7 @@
 ﻿using CourseWork.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Npgsql;
 
 namespace CourseWork.Controllers
 {
@@ -16,6 +17,13 @@ namespace CourseWork.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public Object LogIn(string login, string password)
+        {
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM checkuser({login},{password})", DataBase._connection);
+            NpgsqlDataReader reader = command.ExecuteReader();
+            return reader.Read();
         }
 
         public IActionResult Privacy()
