@@ -22,39 +22,9 @@ const onPasswordInput = () => {
 login.addEventListener("input", onLoginInput);
 password.addEventListener("input", onPasswordInput);
 
-function onLoginClick()
-{   
-    let request_CheckLogin = new XMLHttpRequest();
-    request_CheckLogin.onreadystatechange = function ()
-    {
-        if (this.readyState === 4 && this.status === 200)
-        {
-            let user = JSON.parse(this.responseText);
-            alert(user);
-            if (user === false) {
-                login.parentNode.classList.add('alert-validate');
-                password.parentNode.classList.add('alert-validate');
-                login.value = "";
-                password.value = "";
-            }
-            //else
-            //{
-            //    let request_GetID = new XMLHttpRequest();
-            //    request_GetID.onreadystatechange = function () {
-            //        if (this.readyState === 4 && this.status === 200) {
-            //            let userInfo = JSON.parse(this.responseText);
-            //            let date = new Date(Date.now() + 86400e3);
-            //            date = date.toUTCString();
-            //            setCookie("user", login.value, {secure: true, 'expires': date});
-            //            setCookie("id_user", userInfo.id_user, {secure: true, 'expires': date});
-            //            window.location = "mainPage.html";
-            //        }
-            //    }
-            //    request_GetID.open("GET", "http://localhost:8080/user/findByLogin?login=" + login.value);
-            //    request_GetID.send();
-            //}
-        }
-    };
-    request_CheckLogin.open("GET", "http://localhost:7113/Home/LogIn?login=" + login.value + "&password=" + password.value);
-    request_CheckLogin.send();
+ async function onLoginClick()
+{
+     const res = await fetch("https://localhost:7113/Home/LogIn?login=" + login.value + "&password=" + password.value);
+     const data = await res.json();
+     alert(data);
 }
