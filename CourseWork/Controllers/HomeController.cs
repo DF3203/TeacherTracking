@@ -21,19 +21,24 @@ namespace CourseWork.Controllers
 
         public object LogIn(string login, string password)
         {
-            NpgsqlCommand command = new NpgsqlCommand($"SELECT * FROM checkuser('{login}','{password}')", DataBase._connection);
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT public.checkuser('{login}','{password}','{Request.HttpContext.Connection.RemoteIpAddress}')", DataBase._connection);
             DataBase._connection.Open();
             NpgsqlDataReader reader = command.ExecuteReader();
             object result = new object();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                    result = reader.GetValue(0);
-            }
-            else result = false;
+            while (reader.Read()) result = reader.GetValue(0);
             DataBase._connection.Close();
-            _logger.LogInformation($"Attempt to log in with username {login} and password {password}");
-            return String.IsNullOrEmpty(result.ToString())?false:result;
+            _logger.LogInformation($"Attempt to log in with username {login} and password {password} and ip {Request.HttpContext.Connection.RemoteIpAddress}");
+            return result;
+        }
+        public object findByLogin(string login)
+        {
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user FROM tb_users WHERE login='{login}'", DataBase._connection);
+            DataBase._connection.Open();
+            NpgsqlDataReader reader = command.ExecuteReader();
+            object result = new object();
+            while (reader.Read()) result = reader.GetValue(0);
+            DataBase._connection.Close();
+            return result;
         }
 
         public IActionResult Privacy()

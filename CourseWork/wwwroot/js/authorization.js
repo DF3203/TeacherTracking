@@ -33,10 +33,25 @@ password.addEventListener("input", onPasswordInput);
 {
      const res = await fetch("https://localhost:7113/Home/LogIn?login=" + login.value + "&password=" + password.value);
      const data = await res.json();
-     if (data == false) {
+     if (data == 0) {
          login.parentNode.setAttribute('data-validate', "Неправильний логін або пароль");
          login.parentNode.classList.add('alert-validate');
          password.parentNode.setAttribute('data-validate', "Неправильний логін або пароль");
          password.parentNode.classList.add('alert-validate');
+     }
+     else if (data == 2) {
+         login.parentNode.setAttribute('data-validate', "Спробуйте пізніше");
+         login.parentNode.classList.add('alert-validate');
+         password.parentNode.setAttribute('data-validate', "Спробуйте пізніше");
+         password.parentNode.classList.add('alert-validate');
+     }
+     else if (data == 1) {
+         const res = await fetch("https://localhost:7113/Home/findByLogin?login=" + login.value);
+         const user = await res.json();
+         let date = new Date(Date.now() + 86400e3);
+         date = date.toUTCString();
+         Cookies.setCookie("user", login.value, { secure: true, 'expires': date });
+         Cookies.setCookie("id_user", user.id_user, { secure: true, 'expires': date });
+         window.location = "mainPage.cshtml";
      }
 }
