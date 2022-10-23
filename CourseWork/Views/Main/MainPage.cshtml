@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Курсова робота";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Сторінка користувача</title>
+    <!--===============================================================================================-->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/mainPage.css">
+</head>
+<body>
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('');"></div></div>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000000;">
+    <form class="form-inline">
+        <button class="btn menu-btn" type="button"><img src="" class="logoimg" width="50" height="50">
+        <span>Menu</span></button>
+    </form>
+</nav>
+<div class="wrapper">
+    <div class="menu">
+        <nav class="menu-list bg-dark">
+            <div><a href="#">Главная</a></div>
+            <div><a href="#">Новости</a></div>
+            <div><a href="#">Контакты</a></div>
+            <div><a href="#">Портфолио</a></div>
+            <div onclick="userExit()"><a href="#" >Вийти з системи</a></div>
+        </nav>
+    </div>
+</div>
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Вибрати фото</span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Налаштування профілю</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Прізвище</label><input  id="second_name" type="text" class="form-control" placeholder="Ваше Прізвище" value=""></div>
+                    <div class="col-md-6"><label class="labels">Ім'я</label><input id="first_name" type="text" class="form-control" value="" placeholder="Ваше Ім'я"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Ім'я по батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ваше ім'я по батькові" value=""></div>
+                    <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value=""></div>
+                    <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value=""></div>
+                    <div class="col-md-12"><label class="labels">Посада</label><select id="rank" class="form-select" aria-label="Виберіть зі списку"></select></div>
+                    <div class="col-md-12"><label class="labels">Академічний рівень</label><select id="academic_degree" class="form-select" aria-label="Виберіть зі списку"></select></div>
+                    <div class="col-md-12"><label class="labels">Кафедра</label><select id="chair" class="form-select" aria-label="Виберіть зі списку"></select></div>
+                    <div class="col-md-12"><label class="labels">Ваш рівень доступу</label><input id="category_access" disabled type="text" class="form-control" placeholder="category_access" value=""></div>
+                </div>
+                <!--<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>-->
+                <div class="row mt-2">
+                    <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="button" onclick="saveData()">Зберегти профіль</button></div>
+                    <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="button" onclick="loadData()">Скинути зміни</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===============================================================================================-->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+<!--===============================================================================================-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<!--===============================================================================================-->
+<script src="js/common.js"></script>
+<!--===============================================================================================-->
+<script src="js/userPage.js"></script>
+
+</body>
+</html>

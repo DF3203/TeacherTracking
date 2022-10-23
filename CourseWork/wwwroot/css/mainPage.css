@@ -1,0 +1,147 @@
+body {
+    background: rgb(99, 39, 120)
+}
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    z-index:-1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+}
+
+.container-login100::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index:-1;
+    top: 0;
+    left: 0;
+    background: #005bea;
+    background: -webkit-linear-gradient(bottom, #3ea266, #7ed573);
+    background: -o-linear-gradient(bottom, #3ea266, #7ed573);
+    background: -moz-linear-gradient(bottom,#3ea266, #7ed573);
+    background: linear-gradient(bottom, #3ea266, #7ed573);
+    opacity: 0.85;
+}
+
+
+.profile-button {
+    background: rgb(66, 155, 74);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: rgb(33, 105, 53)
+}
+
+.col-md-6 button
+{
+    margin:20px;
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #68c870;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #68c88e
+}
+
+.photoPicker:hover
+{
+    color: #00c6fb;
+}
+
+section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.wrapper {
+    position: relative;
+    overflow-x: hidden;
+}
+.menu {
+    position: fixed;
+    left: 0;top: 0;
+    z-index: 99;
+    width: 300px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    transition: 0.5s;
+    transform: translateX(-100%);
+}
+.menu_active {
+    transform: translateX(0%);
+}
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    width:350px;
+    padding-top:65px;
+}
+.menu-list a {
+    text-decoration: none;
+    color: #e5e5e5;
+    font-weight: 700;
+    font-size:25px;
+}
+.menu-list div {
+    width:100%;
+    padding:20px;
+    margin-top:10px;
+    text-align: center;
+}
+.menu-list div:hover {
+    background-color: #50595E;
+}
+.menu-btn span{
+    font-size: 25px;
+    margin-left:10px;
+    margin-right: 20px;
+    font-weight: 600;
+}
+.menu-btn{
+    display: flex;
+    width:150px;
+    height:60px;
+    align-items: center;
+    margin-left:5px;
+    background-color: #23262a;
+    color: #77888f;
+}
+.menu-btn:hover{
+    background-color: #657781;
+    color: #ecf7ff;
+}
+.menu-btn img{
+    position: sticky;
+    z-index: 100;
+    opacity: 0.6;
+}

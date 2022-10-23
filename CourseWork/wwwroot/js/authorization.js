@@ -52,6 +52,6 @@ password.addEventListener("input", onPasswordInput);
          date = date.toUTCString();
          Cookies.setCookie("user", login.value, { secure: true, 'expires': date });
          Cookies.setCookie("id_user", user.id_user, { secure: true, 'expires': date });
-         window.location = "mainPage.cshtml";
+         window.location = await fetch("https://localhost:7113/Main/MainPage");
      }
 }
