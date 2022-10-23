@@ -9,6 +9,5 @@ namespace CourseWork.Controllers
             return View();
         }
 
-
     }
 }

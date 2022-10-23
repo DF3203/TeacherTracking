@@ -1,6 +1,6 @@
 ﻿import * as Cookies from "./cookies.js";
-//if (Cookies.getCookie("user") !== undefined && Cookies.getCookie("id_user") !== undefined)
-//window.location = await fetch("https://localhost:7113/Main/Index").res;
+if (Cookies.getCookie("user") !== undefined && Cookies.getCookie("id_user") !== undefined)
+    window.location = "Main/Index";
 
 const button = document.querySelector(".login100-form-btn");
 
@@ -50,8 +50,8 @@ password.addEventListener("input", onPasswordInput);
          const user = await res.json();
          let date = new Date(Date.now() + 86400e3);
          date = date.toUTCString();
-         //Cookies.setCookie("user", login.value, { secure: true, 'expires': date });
-         //Cookies.setCookie("id_user", user.id_user, { secure: true, 'expires': date });
+         Cookies.setCookie("user", login.value, { secure: true, 'expires': date });
+         Cookies.setCookie("id_user", user.id_user, { secure: true, 'expires': date });
          window.location = "Main/Index";
      }
 }
