@@ -12,12 +12,15 @@ document.getElementById('exitbtn').addEventListener("click", function (e) {
         Cookies.deleteCookie("inst_priv");
         Cookies.deleteCookie("fac_priv");
         Cookies.deleteCookie("chair_priv");
-        window.location = "https://localhost:7113/";
+        window.location = "Exit";
     }
 });
-document.getElementById('userbtn').addEventListener("click", function (e) {
-    window.location = "Users";
-});
+try {
+    document.getElementById('userbtn').addEventListener("click", function (e) {
+        window.location = "Users";
+    });
+}
+catch { };
 //sidebad js
 
 

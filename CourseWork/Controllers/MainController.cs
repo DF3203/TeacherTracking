@@ -13,7 +13,18 @@ namespace CourseWork.Controllers
         }
         public IActionResult Users()
         {
-            return View();
+            if (Request.Cookies["user_priv"] != "true")
+                return BadRequest();
+            else
+                return View();
+
+        }
+
+        public IActionResult Exit()
+        {
+            //NpgsqlCommand command = new NpgsqlCommand($"insert into tb_log (id_user, \"action\", target, objecttable, ip, result, \"time\")" +
+                //$" values ({Request.Cookies["id_user"]}, \"unlogged\", \"user\", );");
+            return Redirect("../");
         }
         public object GetUser(int id)
         {
@@ -31,8 +42,5 @@ namespace CourseWork.Controllers
             DataBase._connection.Close();
             return result;
         }
-
-
-
     }
 }

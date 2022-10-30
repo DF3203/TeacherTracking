@@ -24,8 +24,9 @@
                 reader.GetValues(result[result.Count-1]);               
             }
             DataBase._connection.Close();
-            <button class="btn btn-primary btn-success addbtn" type="button" onclick="">Додати</button>
-         <table class="table">
+            <button class="btn btn-primary btn-success addbtn" type="button" onclick="">Додати нового користувача</button>
+        <div class="table-responsive">
+                <table class="table">
           <thead>
             <tr>
               <th scope="col"> </th>
@@ -38,7 +39,7 @@
               <th scope="col">Посада</th>
               <th scope="col">Академічний рівень</th>
               <th scope="col">Кафедра</th>
-              <th scope="col">Ваш рівень доступу</th>
+              <th scope="col">Рівень доступу</th>
               <th scope="col">Дата видалення</th>
               <th scope="col"></th>
               <th scope="col"></th>
@@ -65,6 +66,7 @@
           }
           </tbody>
         </table>
+        </div>
 }
     </div>
 </div>
