@@ -6,13 +6,14 @@ Cookies.checkCookie();
 
 document.getElementById('exitbtn').addEventListener("click", function (e) {
     if (confirm("Ви дійсно хочете вийти з системи?")) {
+        let id = Cookies.getCookie("id_user");
         Cookies.deleteCookie("user");
         Cookies.deleteCookie("id_user");
         Cookies.deleteCookie("user_priv");
         Cookies.deleteCookie("inst_priv");
         Cookies.deleteCookie("fac_priv");
         Cookies.deleteCookie("chair_priv");
-        window.location = "Exit";
+        window.location = "Exit?id=1";
     }
 });
 try {

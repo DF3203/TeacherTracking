@@ -14,19 +14,59 @@ namespace CourseWork.Controllers
         public IActionResult Users()
         {
             if (Request.Cookies["user_priv"] != "true")
-                return BadRequest();
+                return new UnauthorizedResult();
             else
                 return View();
 
         }
 
-        public IActionResult Exit()
+        public IActionResult Exit(int id)
         {
-            NpgsqlCommand command = new NpgsqlCommand($"call addlog({Request.Cookies["id_user"]}, 'unlogged', 'user', 'tb_users', '{Request.HttpContext.Connection.RemoteIpAddress}', 1)", DataBase._connection);
+            NpgsqlCommand command = new NpgsqlCommand($"call addlog({id}, 'unlogged', 'user', 'tb_users', '{Request.HttpContext.Connection.RemoteIpAddress}', 1)", DataBase._connection);
             DataBase._connection.Open();
-            command.ExecuteNonQuery();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
             return Redirect("../");
         }
+
+        public IActionResult UpdateUser(string name, string surname, string middlename, string phone, string email)
+        {
+            if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(middlename)
+                || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(email))
+                return new BadRequestObjectResult("Поля не можуть бути пустими");
+            name = name.Replace(" ", "");
+            surname = surname.Replace(" ", "");
+            middlename = middlename.Replace(" ", "");
+            phone = phone.Replace(" ", "");
+            email = email.Replace(" ", "");
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+                $"UPDATE tb_users_info SET first_name = '{name}', second_name = '{surname}', " +
+                $"middle_name = '{middlename}', email = '{email}', phone = '{phone}' " +
+                $"WHERE id_user_info = {Request.Cookies["id_user"]}; " +
+                $"CALL addlog({Request.Cookies["id_user"]}, 'changed', '{Request.Cookies["id_user"]}', 'tb_users_info', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT;", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(ex.Message);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+
         public object GetUser(int id)
         {
             NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info, first_name, second_name, middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, user_photo, delete_date " +

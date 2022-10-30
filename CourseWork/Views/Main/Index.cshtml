@@ -42,8 +42,8 @@
                             <div class="col-md-12"><label class="labels">Ваш рівень доступу</label><input id="category_access" disabled type="text" class="form-control" placeholder="category_access" value="@result[9]"></div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="button" onclick="saveData()">Зберегти профіль</button></div>
-                            <div class="col-md-6 text-center"><button class="btn btn-primary profile-button" type="button" onclick="loadData()">Скинути зміни</button></div>
+                            <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>
+                            <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
                         </div>
                     </div>
                 </div>
@@ -57,4 +57,5 @@
             }
         </div>
     </div>
+<script src="~/js/mainIndex.js"></script>
 
