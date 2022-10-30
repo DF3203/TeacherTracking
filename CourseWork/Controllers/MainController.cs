@@ -22,8 +22,9 @@ namespace CourseWork.Controllers
 
         public IActionResult Exit()
         {
-            //NpgsqlCommand command = new NpgsqlCommand($"insert into tb_log (id_user, \"action\", target, objecttable, ip, result, \"time\")" +
-                //$" values ({Request.Cookies["id_user"]}, \"unlogged\", \"user\", );");
+            NpgsqlCommand command = new NpgsqlCommand($"call addlog({Request.Cookies["id_user"]}, 'unlogged', 'user', 'tb_users', '{Request.HttpContext.Connection.RemoteIpAddress}', 1)", DataBase._connection);
+            DataBase._connection.Open();
+            command.ExecuteNonQuery();
             return Redirect("../");
         }
         public object GetUser(int id)
