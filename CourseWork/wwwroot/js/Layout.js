@@ -24,6 +24,9 @@ try {
 catch { };
 //sidebad js
 
+document.querySelector('#mainbtn').addEventListener("click", function() {
+    window.location = "Index";
+})
 
 document.querySelector('body,html').addEventListener("click", function (e) {
     if (navop === true) {
