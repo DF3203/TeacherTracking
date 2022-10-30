@@ -39,5 +39,5 @@ export function getCookie(name) {
 export function checkCookie()
 {
     if (getCookie("user") === undefined || getCookie("id_user") === undefined)
-        window.location = "index.html";
+        window.location = "https://localhost:7113/";
 }

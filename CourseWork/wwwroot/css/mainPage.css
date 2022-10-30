@@ -127,6 +127,9 @@ section {
     margin-right: 20px;
     font-weight: 600;
 }
+.activabutt{
+    padding-left:50px;
+}
 .menu-btn{
     display: flex;
     width:150px;
@@ -140,7 +143,7 @@ section {
     background-color: #657781;
     color: #ecf7ff;
 }
-.menu-btn img{
+#logoimg{
     position: sticky;
     z-index: 100;
     opacity: 0.6;

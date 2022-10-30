@@ -1,37 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Курсова робота";
-    Layout = null;
+    Layout = "_Layout";
 }
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Сторінка користувача</title>
-    <!--===============================================================================================-->
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet'>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="~/css/mainPage.css">
-</head>
-<body>
-<div class="limiter">
-    <div class="container-login100" style="background-image: url('../images/img-02.jpg');"></div></div>
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000000;">
-    <form class="form-inline">
-        <button class="btn menu-btn" type="button"><img src="~/images/logo_white.svg" class="logoimg" width="50" height="50">
-        <span>Menu</span></button>
-    </form>
-</nav>
-<div class="wrapper">
-    <div class="menu">
-        <nav class="menu-list bg-dark">
-            <div><a href="#">Головна</a></div>
-            <div><a href="#">Контакти</a></div>
-            <div><a href="#">Портфоліо</a></div>
-            <div onclick="userExit()"><a href="#" >Вийти з системи</a></div>
-        </nav>
-    </div>
-</div>
+
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
@@ -50,9 +21,9 @@
                     <div class="col-md-12"><label class="labels">Ім'я по батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ваше ім'я по батькові" value=""></div>
                     <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value=""></div>
                     <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value=""></div>
-                    <div class="col-md-12"><label class="labels">Посада</label><select id="rank" class="form-select" aria-label="Виберіть зі списку"></select></div>
-                    <div class="col-md-12"><label class="labels">Академічний рівень</label><select id="academic_degree" class="form-select" aria-label="Виберіть зі списку"></select></div>
-                    <div class="col-md-12"><label class="labels">Кафедра</label><select id="chair" class="form-select" aria-label="Виберіть зі списку"></select></div>
+                    <div class="col-md-12"><label class="labels">Посада</label><input id="rank" disabled type="text" class="form-control" placeholder="rank" value=""></div>
+                    <div class="col-md-12"><label class="labels">Академічний рівень</label><input id="academic_degree" disabled type="text" class="form-control" id="academic_degree" value=""></div>
+                    <div class="col-md-12"><label class="labels">Кафедра</label><input id="chair" disabled type="text" class="form-control" placeholder="chair" value=""></div>
                     <div class="col-md-12"><label class="labels">Ваш рівень доступу</label><input id="category_access" disabled type="text" class="form-control" placeholder="category_access" value=""></div>
                 </div>
                 <!--<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>-->
@@ -71,12 +42,5 @@
         </div>
     </div>
 </div>
-<!--===============================================================================================-->
-    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
-<!--===============================================================================================-->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<!--===============================================================================================-->
-<script src="~/js/userPage.js"></script>
+    <script src="~/js/UserDataSearch.js" type="module"></script>
 
-</body>
-</html>

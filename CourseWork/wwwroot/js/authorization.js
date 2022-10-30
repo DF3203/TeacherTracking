@@ -51,7 +51,13 @@ password.addEventListener("input", onPasswordInput);
          let date = new Date(Date.now() + 86400e3);
          date = date.toUTCString();
          Cookies.setCookie("user", login.value, { secure: true, 'expires': date });
-         Cookies.setCookie("id_user", user.id_user, { secure: true, 'expires': date });
+         Cookies.setCookie("id_user", user, { secure: true, 'expires': date });
+         const res2 = await fetch("https://localhost:7113/Home/GetAccess?id=" + user);
+         const accesses = await res2.json();
+         Cookies.setCookie("user_priv", accesses[0], { secure: true, 'expires': date });
+         Cookies.setCookie("inst_priv", accesses[1], { secure: true, 'expires': date });
+         Cookies.setCookie("fac_priv", accesses[2], { secure: true, 'expires': date });
+         Cookies.setCookie("chair_priv", accesses[3], { secure: true, 'expires': date });
          window.location = "Main/Index";
      }
 }
