@@ -11,6 +11,10 @@ namespace CourseWork.Controllers
         {
             return View();
         }
+        public IActionResult Users()
+        {
+            return View();
+        }
         public object GetUser(int id)
         {
             NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info, first_name, second_name, middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, user_photo, delete_date " +
@@ -27,6 +31,8 @@ namespace CourseWork.Controllers
             DataBase._connection.Close();
             return result;
         }
+
+
 
     }
 }

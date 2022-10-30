@@ -15,6 +15,9 @@ document.getElementById('exitbtn').addEventListener("click", function (e) {
         window.location = "https://localhost:7113/";
     }
 });
+document.getElementById('userbtn').addEventListener("click", function (e) {
+    window.location = "Users";
+});
 //sidebad js
 
 
