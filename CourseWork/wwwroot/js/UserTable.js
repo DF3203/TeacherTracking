@@ -2,7 +2,7 @@
 
 }
 function EditButton(id) {
-    alert(id);
+    window.location = `ChangeUser?id=${id}`;
 }
 function DeleteButton(id) {
     alert(id);
