@@ -1,4 +1,4 @@
-import * as Cookies from "./cookies.js";
+import * as Cookies from "../js/common.js";
 let userInfo = null;
 let navop=false;
 
@@ -59,3 +59,4 @@ document.querySelector('.menu-btn').addEventListener("click", function (e) {
 document.querySelector('.menu').addEventListener("click", function (e) {
     e.stopPropagation();
 });
+

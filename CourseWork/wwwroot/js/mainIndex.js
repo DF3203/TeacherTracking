@@ -1,9 +1,13 @@
-﻿const f_name = document.querySelector('#first_name');
+﻿import * as Toasties from "../js/common.js";
+const f_name = document.querySelector('#first_name');
 const s_name = document.querySelector('#second_name');
 const m_name = document.querySelector('#middle_name');
 const phone = document.querySelector('#phone');
 const email = document.querySelector('#email');
 document.querySelector('#saveBtn').addEventListener('click', onSaveClick)
+
+
+
 
 async function onSaveClick() { 
     const query = await fetch(`https://localhost:7113/Main/UpdateUser/LogIn?name=${f_name.value}&surname=${s_name.value}&middlename=${m_name.value}&phone=${phone.value}&email=${email.value}`);
@@ -11,8 +15,8 @@ async function onSaveClick() {
     if (status != 200)
     {
         const response = await query.text();
-        alert(response);
+        Toasties.callToast(false,response);
     }
     else
-        alert("ok");
+        Toasties.callToast(true,"Зміни внесено");
 }

@@ -1,4 +1,4 @@
-﻿import * as Cookies from "./cookies.js";
+﻿import * as Cookies from "../js/common.js";
 if (Cookies.getCookie("user") !== undefined && Cookies.getCookie("id_user") !== undefined)
     window.location = "Main/Index";
 

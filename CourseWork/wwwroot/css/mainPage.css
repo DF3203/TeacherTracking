@@ -25,6 +25,7 @@ body {
     position: absolute;
 }
 
+
 .container-login100::before {
     content: "";
     display: block;
