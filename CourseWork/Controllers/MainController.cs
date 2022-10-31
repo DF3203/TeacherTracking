@@ -20,6 +20,7 @@ namespace CourseWork.Controllers
 
         }
 
+
         public IActionResult Exit(int id)
         {
             NpgsqlCommand command = new NpgsqlCommand($"call addlog({id}, 'unlogged', 'user', 'tb_users', '{Request.HttpContext.Connection.RemoteIpAddress}', 1)", DataBase._connection);
@@ -35,6 +36,17 @@ namespace CourseWork.Controllers
             }
             DataBase._connection.Close();
             return Redirect("../");
+        }
+
+        public IActionResult ChangeUser(int id)
+        {
+            if (Request.Cookies["user_priv"] != "true")
+                return new UnauthorizedResult();
+            else
+            {
+                ViewBag.UserId = id;
+                return View();
+            }
         }
 
         public IActionResult UpdateUser(string name, string surname, string middlename, string phone, string email)
@@ -61,7 +73,7 @@ namespace CourseWork.Controllers
             catch(Exception ex)
             {
                 DataBase._connection.Close();
-                return new BadRequestObjectResult(ex.Message);
+                return new BadRequestObjectResult("База даних відхилила запит");
             }
             DataBase._connection.Close();
             return new OkResult();
