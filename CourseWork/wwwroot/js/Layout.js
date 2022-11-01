@@ -3,18 +3,32 @@ let userInfo = null;
 let navop=false;
 
 Cookies.checkCookie();
+let a = new bootstrap.Modal(document.getElementById('staticBackdrop'), { backdrop: true, keyboard: true, focus: true });
 
 document.getElementById('exitbtn').addEventListener("click", function (e) {
-    if (confirm("Ви дійсно хочете вийти з системи?")) {
-        let id = Cookies.getCookie("id_user");
-        Cookies.deleteCookie("user");
-        Cookies.deleteCookie("id_user");
-        Cookies.deleteCookie("user_priv");
-        Cookies.deleteCookie("inst_priv");
-        Cookies.deleteCookie("fac_priv");
-        Cookies.deleteCookie("chair_priv");
-        window.location = "Exit?id=1";
-    }
+    a.toggle();
+    //if (confirm("Ви дійсно хочете вийти з системи?")) {
+    //    let id = Cookies.getCookie("id_user");
+    //    Cookies.deleteCookie("user");
+    //    Cookies.deleteCookie("id_user");
+    //    Cookies.deleteCookie("user_priv");
+    //    Cookies.deleteCookie("inst_priv");
+    //    Cookies.deleteCookie("fac_priv");
+    //    Cookies.deleteCookie("chair_priv");
+    //    window.location = "Exit?id=1";
+    //}
+});
+
+document.getElementById('totaySuperPuperExitBtn').addEventListener("click", function (e) {
+    a.toggle();
+     let id = Cookies.getCookie("id_user");
+     Cookies.deleteCookie("user");
+     Cookies.deleteCookie("id_user");
+     Cookies.deleteCookie("user_priv");
+     Cookies.deleteCookie("inst_priv");
+     Cookies.deleteCookie("fac_priv");
+     Cookies.deleteCookie("chair_priv");
+     window.location = "Exit?id=1";
 });
 try {
     document.getElementById('userbtn').addEventListener("click", function () {

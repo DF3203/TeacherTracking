@@ -24,9 +24,11 @@
                 reader.GetValues(result[result.Count-1]);               
             }
             DataBase._connection.Close();
-                            <div class="mt-3" ><button class="btn btn-primary btn-success" type="button" onclick="AddButton()">Додати нового користувача</button></div>
+                        
+                        <div class="mt-3" ><button class="btn btn-primary btn-success" type="button" onclick="AddButton()">Додати нового користувача</button></div>
+                        <div class="mt-3"><input type="search" placeholder="Пеніс"></div>
                         <div class="table-responsive">
-                                <table class="table" style="font-size:90%">
+                                <table class="table" id="data" style="font-size:90%">
                           <thead>
                             <tr>
                               <th scope="col"> </th>
@@ -72,5 +74,7 @@
 }
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script src="~/js/UserTable.js" ></script>
 

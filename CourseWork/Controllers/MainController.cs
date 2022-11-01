@@ -76,6 +76,31 @@ namespace CourseWork.Controllers
             }
         }
         #endregion
+
+        #region User
+        public List<object[]> GetAllUsers()
+        {
+            NpgsqlCommand command = new NpgsqlCommand(
+            $"SELECT id_user_info, tb_users.login, second_name || ' ' ||  first_name || ' ' || middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, delete_date " +
+            $"FROM public.tb_users_info " +
+            $"LEFT JOIN public.tb_category_access ON tb_category_access.id_category_access = tb_users_info.id_category_access " +
+            $"LEFT JOIN public.tb_rank ON tb_rank.id_rank = tb_users_info.id_rank " +
+            $"LEFT JOIN public.tb_academic_degree ON tb_academic_degree.id_academic_degree = tb_users_info.id_academic_degree " +
+            $"LEFT JOIN public.tb_chair ON tb_chair.id_chair = tb_users_info.id_chair " +
+            $"LEFT JOIN public.tb_users ON tb_users.id_user = tb_users_info.id_user_info ORDER BY id_user_info", DataBase._connection);
+            DataBase._connection.Open();
+            NpgsqlDataReader reader = command.ExecuteReader();
+            List<object[]> result = new List<object[]>();
+            while (reader.Read())
+            {
+                result.Add(new object[10]);
+                reader.GetValues(result[result.Count - 1]);
+            }
+            DataBase._connection.Close();
+            return result;
+        }
+
+        #endregion
         public IActionResult UpdateUser(string name, string surname, string middlename, string phone, string email)
         {
             if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(middlename)
