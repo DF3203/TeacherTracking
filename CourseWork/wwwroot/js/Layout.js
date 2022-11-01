@@ -96,7 +96,25 @@ document.querySelector('.menu').addEventListener("click", function (e) {
 });
 
     $(document).ready(function(){
-        $('.Smarttable').dataTable();
+        $('.Smarttable').dataTable({
+            "language": {
+                "lengthMenu": "",
+                "zeroRecords": "Нічого не знайдено",
+                "info": "Сторінка _PAGE_ з _PAGES_",
+                "infoEmpty": "Даних немає",
+                "search": "Пошук",
+                "paginate": {
+                    "first": "Перший",
+                    "last": "Останній",
+                    "next": "Далі",
+                    "previous": "Назад"
+                },
+                "infoFiltered": "(Відібрано з _MAX_ записів)"
+            },
+        });
+        //document.querySelector("#DataTables_Table_0_filter").style.display = "flex";
+        document.querySelector(".col-sm-12").innerHTML = "";
 });
+
 
 
