@@ -95,3 +95,8 @@ document.querySelector('.menu').addEventListener("click", function (e) {
     e.stopPropagation();
 });
 
+    $(document).ready(function(){
+        $('.Smarttable').dataTable();
+});
+
+
