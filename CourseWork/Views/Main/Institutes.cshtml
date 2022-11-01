@@ -1,5 +1,56 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Курсова робота";
+    Layout = "_Layout";
 }
+@using Npgsql;
+@using Microsoft.AspNetCore.Mvc;
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        @{
+            NpgsqlCommand command = new NpgsqlCommand(
+            $"SELECT id_institute, name_institute, abbreviation_institute, tui.second_name || ' ' || tui.first_name || ' ' || tui.middle_name " +
+            $"FROM tb_institute " +
+            $"LEFT JOIN tb_users_info tui on tb_institute.id_user_chief = tui.id_user_info ORDER BY id_institute;", DataBase._connection);
+            DataBase._connection.Open();
+            NpgsqlDataReader reader = command.ExecuteReader();
+            List<object[]> result = new List<object[]>();
+            while (reader.Read())
+            {
+                result.Add(new object[4]);
+                reader.GetValues(result[result.Count - 1]);
+            }
+            DataBase._connection.Close();
+            <div class="mt-3"><button class="btn btn-primary btn-success" type="button" onclick="AddButton()">Додати новий інститут</button></div>
+            <div class="table-responsive">
+                <table class="table" style="font-size:90%">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Назва інституту</th>
+                            <th scope="col">Скорочена назва</th>
+                            <th scope="col">Директор</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (object[] row in result)
+                        {
+                            <tr>
+                                <th scope="row">@row[0]</th>
+                                <td>@row[1]</td>
+                                <td>@row[2]</td>
+                                <td>@row[3]</td>
+                                <td><button class="btn btn-primary btn-success" type="button" onclick="EditButton(@row[0])">Редагувати</button></td>
+                                <td><button class="btn btn-primary btn-danger" type="button" onclick="DeleteButton(@row[0])">Видалити</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/js/UserTable.js"></script>
+

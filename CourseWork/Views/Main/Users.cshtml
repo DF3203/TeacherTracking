@@ -15,7 +15,7 @@
                 $"LEFT JOIN public.tb_rank ON tb_rank.id_rank = tb_users_info.id_rank " +
                 $"LEFT JOIN public.tb_academic_degree ON tb_academic_degree.id_academic_degree = tb_users_info.id_academic_degree " +
                 $"LEFT JOIN public.tb_chair ON tb_chair.id_chair = tb_users_info.id_chair " +
-                $"LEFT JOIN public.tb_users ON tb_users.id_user = tb_users_info.id_user_info", DataBase._connection);
+                $"LEFT JOIN public.tb_users ON tb_users.id_user = tb_users_info.id_user_info ORDER BY id_user_info", DataBase._connection);
             DataBase._connection.Open();
             NpgsqlDataReader reader = command.ExecuteReader();
             List<object[]> result = new List<object[]>();
