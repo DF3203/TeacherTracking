@@ -3,24 +3,14 @@ let userInfo = null;
 let navop=false;
 
 Cookies.checkCookie();
-let a = new bootstrap.Modal(document.getElementById('staticBackdrop'), { backdrop: true, keyboard: true, focus: true });
+let exitModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), { backdrop: true, keyboard: true, focus: true });
 
 document.getElementById('exitbtn').addEventListener("click", function (e) {
-    a.toggle();
-    //if (confirm("Ви дійсно хочете вийти з системи?")) {
-    //    let id = Cookies.getCookie("id_user");
-    //    Cookies.deleteCookie("user");
-    //    Cookies.deleteCookie("id_user");
-    //    Cookies.deleteCookie("user_priv");
-    //    Cookies.deleteCookie("inst_priv");
-    //    Cookies.deleteCookie("fac_priv");
-    //    Cookies.deleteCookie("chair_priv");
-    //    window.location = "Exit?id=1";
-    //}
+    exitModal.toggle();
 });
 
 document.getElementById('totaySuperPuperExitBtn').addEventListener("click", function (e) {
-    a.toggle();
+    exitModal.toggle();
      let id = Cookies.getCookie("id_user");
      Cookies.deleteCookie("user");
      Cookies.deleteCookie("id_user");
@@ -113,7 +103,11 @@ document.querySelector('.menu').addEventListener("click", function (e) {
             },
         });
         //document.querySelector("#DataTables_Table_0_filter").style.display = "flex";
-        document.querySelector(".col-sm-12").innerHTML = "";
+        document.querySelector(".col-sm-12").innerHTML = "<h2>Таблиця</h2>";
+        document.querySelector("#DataTables_Table_0_wrapper > div:nth-child(1) > div:nth-child(2)").style.display = "flex";
+        //document.querySelector("#DataTables_Table_0_wrapper > div:nth-child(1) > div:nth-child(2)").style.alignItems = "flex-end";
+        document.querySelector("#DataTables_Table_0_wrapper > div:nth-child(1) > div:nth-child(2)").style.justifyContent = "right";
+        document.querySelector("#DataTables_Table_0_filter > label").style.padding = "0px 100px 0px 0px";
 });
 
 
