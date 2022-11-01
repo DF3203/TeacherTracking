@@ -7,6 +7,9 @@ namespace CourseWork.Controllers
 {
     public class MainController : Controller
     {
+
+
+        #region Pages
         public IActionResult Index()
         {
             return View();
@@ -20,6 +23,30 @@ namespace CourseWork.Controllers
 
         }
 
+        public IActionResult Chairs()
+        {
+
+            if (Request.Cookies["chair_priv"] != "true")
+                return new UnauthorizedResult();
+            else
+                return View();
+        }
+
+        public IActionResult Institutes()
+        {
+            if (Request.Cookies["inst_priv"] != "true")
+                return new UnauthorizedResult();
+            else
+                return View();
+        }
+
+        public IActionResult Faculties()
+        {
+            if (Request.Cookies["fac_priv"] != "true")
+                return new UnauthorizedResult();
+            else
+                return View();
+        }
 
         public IActionResult Exit(int id)
         {
@@ -48,7 +75,7 @@ namespace CourseWork.Controllers
                 return View();
             }
         }
-
+        #endregion
         public IActionResult UpdateUser(string name, string surname, string middlename, string phone, string email)
         {
             if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(middlename)

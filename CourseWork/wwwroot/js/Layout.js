@@ -17,8 +17,29 @@ document.getElementById('exitbtn').addEventListener("click", function (e) {
     }
 });
 try {
-    document.getElementById('userbtn').addEventListener("click", function (e) {
+    document.getElementById('userbtn').addEventListener("click", function () {
         window.location = "Users";
+    });
+}
+catch { };
+
+try {
+    document.getElementById('institutebtn').addEventListener("click", function () {
+        window.location = "Institutes";
+    });
+}
+catch { };
+
+try {
+    document.getElementById('facultybtn').addEventListener("click", function () {
+        window.location = "Faculties";
+    });
+}
+catch { };
+
+try {
+    document.getElementById('chairbtn').addEventListener("click", function () {
+        window.location = "Chairs";
     });
 }
 catch { };

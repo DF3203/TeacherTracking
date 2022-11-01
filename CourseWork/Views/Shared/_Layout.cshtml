@@ -28,6 +28,21 @@
                 {
                             <div id="userbtn"><a href="#">Користувачі</a></div>
                 }
+
+                    if (Context.Request.Cookies["inst_priv"] == "true")
+                    {
+                        <div id="institutebtn"><a href="#">Інститути</a></div>
+                    }
+
+                    if (Context.Request.Cookies["fac_priv"] == "true")
+                    {
+                        <div id="facultybtn"><a href="#">Факультети</a></div>
+                    }
+
+                    if (Context.Request.Cookies["chair_priv"] == "true")
+                    {
+                        <div id="chairbtn"><a href="#">Кафедри</a></div>
+                    }
            }
                     <div><a href="#">Контакти</a></div>
                 <div><a href="#">Портфоліо</a></div>
