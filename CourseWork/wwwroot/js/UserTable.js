@@ -18,6 +18,12 @@ document.getElementById('restoreConfirm').addEventListener("click", function (e)
     alert(document.querySelector("#password").value);
 });
 
+
+//document.getElementById('deleteBackDrop').addEventListener('hidden.bs.modal', function (event) {
+//    alert("Закриття");
+//})
+
+
 function EditButton(id) {
     window.location = `ChangeUser?id=${id}`;
 }
