@@ -157,6 +157,53 @@ namespace CourseWork.Controllers
         }
         #endregion
 
+        #region Faculty
+        public IActionResult DeleteFaculty(int id)
+        {
+            if ((Request.Cookies["fac_priv"] != "true"))
+                return new UnauthorizedResult();
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+                $"DELETE FROM tb_faculty WHERE id_faculty = {id}; " +
+                $"call addlog({Request.Cookies["id_user"]}, 'delete_faculty', '{id}', 'tb_faculty', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT;", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+        #endregion
 
+        #region Institute
+
+        public IActionResult DeleteInstitute(int id)
+        {
+            if ((Request.Cookies["inst_priv"] != "true"))
+                return new UnauthorizedResult();
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+                $"DELETE FROM tb_institute WHERE id_instutute = {id}; " +
+                $"call addlog({Request.Cookies["id_user"]}, 'delete_institute', '{id}', 'tb_institute', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT;", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+        #endregion
     }
 }
