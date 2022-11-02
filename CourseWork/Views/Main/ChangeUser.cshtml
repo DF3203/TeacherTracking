@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Курсова робота";
     Layout = "_Layout";
 }
@@ -9,53 +8,143 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         @{
-            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info, first_name, second_name, middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, user_photo, delete_date " +
+            object[] result = new object[12];
+            if (ViewBag.UserId >= 0)
+            {
+                NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info, first_name, second_name, middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, user_photo, delete_date " +
                 $"FROM public.tb_users_info " +
                 $"LEFT JOIN public.tb_category_access ON tb_category_access.id_category_access = tb_users_info.id_category_access " +
                 $"LEFT JOIN public.tb_rank ON tb_rank.id_rank = tb_users_info.id_rank " +
                 $"LEFT JOIN public.tb_academic_degree ON tb_academic_degree.id_academic_degree = tb_users_info.id_academic_degree " +
                 $"LEFT JOIN public.tb_chair ON tb_chair.id_chair = tb_users_info.id_chair " +
                 $"WHERE id_user_info='{ViewBag.UserId}'", DataBase._connection);
-            DataBase._connection.Open();
-            NpgsqlDataReader reader = command.ExecuteReader();
-            object[] result = new object[12];
-            while (reader.Read()) reader.GetValues(result);
-            DataBase._connection.Close();   
-                            <div class="col-md-3 border-right">
-                                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
-                                </div>
-                                <div class="col-md-5 border-right">
-                                    <div class="p-3 py-5">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h4 class="text-right">Налаштування профілю</h4>
-                                        </div>
-                                        <div class="row mt-2">
-                                            <div class="col-md-6"><label class="labels">Прізвище</label><input  id="second_name" type="text" class="form-control" placeholder="Ваше Прізвище" value="@result[2]"></div>
-                                            <div class="col-md-6"><label class="labels">Ім'я</label><input id="first_name" type="text" class="form-control" value="@result[1]" placeholder="Ваше Ім'я"></div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-md-12"><label class="labels">Ім'я по батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ваше ім'я по батькові" value="@result[3]"></div>
-                                            <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value="@result[4]"></div>
-                                            <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value="@result[5]"></div>
-                                            <div class="col-md-12"><label class="labels">Посада</label><input id="rank" disabled type="text" class="form-control" placeholder="rank" value="@result[6]"></div>
-                                            <div class="col-md-12"><label class="labels">Академічний рівень</label><input id="academic_degree" disabled type="text" class="form-control" id="academic_degree" value="@result[7]"></div>
-                                            <div class="col-md-12"><label class="labels">Кафедра</label><input id="chair" disabled type="text" class="form-control" placeholder="chair" value="@result[8]"></div>
-                                            <div class="col-md-12"><label class="labels">Ваш рівень доступу</label><input id="category_access" disabled type="text" class="form-control" placeholder="category_access" value="@result[9]"></div>
-                                        </div>
-                                        <div class="row mt-2">
-                                            <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>
-                                            <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="p-3 py-5">
-                                        <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                                        <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                                        <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
-                                    </div>
-                                </div>
+                DataBase._connection.Open();
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read()) reader.GetValues(result);
+                DataBase._connection.Close();
             }
-        </div>
+            List<object> ranks = new List<object> { };
+            List<object> academic_degree = new List<object> { };
+            List<object> chairs = new List<object> { };
+            List<object> category_access = new List<object> { };
+            NpgsqlCommand commanda = new NpgsqlCommand($"SELECT name_rank FROM public.tb_rank", DataBase._connection);
+            DataBase._connection.Open();
+            NpgsqlDataReader readera = commanda.ExecuteReader();
+            while (readera.Read()) ranks.Add(readera.GetValue(0));
+            DataBase._connection.Close();
+            commanda = new NpgsqlCommand($"SELECT name_academic_degree FROM public.tb_academic_degree", DataBase._connection);
+            DataBase._connection.Open();
+            readera = commanda.ExecuteReader();
+            while (readera.Read()) academic_degree.Add(readera.GetValue(0));
+            DataBase._connection.Close();
+            commanda = new NpgsqlCommand($"SELECT name_chair FROM public.tb_chair;", DataBase._connection);
+            DataBase._connection.Open();
+            readera = commanda.ExecuteReader();
+            while (readera.Read()) chairs.Add(readera.GetValue(0));
+            DataBase._connection.Close();
+            commanda = new NpgsqlCommand($"SELECT name_category_access FROM public.tb_category_access;", DataBase._connection);
+            DataBase._connection.Open();
+            readera = commanda.ExecuteReader();
+            while (readera.Read()) category_access.Add(readera.GetValue(0));
+            DataBase._connection.Close();
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        @if (ViewBag.UserId == -1)
+                        {
+                            <h4 class="text-right">Створення користувача</h4>
+                        }
+                        else
+                        {
+                            <h4 class="text-right">Редагування користувача</h4>
+                        }
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Прізвище</label><input id="second_name" type="text" class="form-control" placeholder="Ваше Прізвище" value="@result[2]"></div>
+                        <div class="col-md-6"><label class="labels">Ім'я</label><input id="first_name" type="text" class="form-control" value="@result[1]" placeholder="Ваше Ім'я"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">По батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ваше ім'я по батькові" value="@result[3]"></div>
+                        <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value="@result[4]"></div>
+                        <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value="@result[5]"></div>
+                        <div class="col-md-12">
+                            <label class="labels">Посада</label><select id="rank" class="form-select" aria-label="Виберіть зі списку">
+                                @foreach (object rank in ranks)
+                                {
+                                    if (rank.ToString() == result[6].ToString())
+                                    {
+                                        <option selected>@rank</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@rank</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Академічний рівень</label><select id="academic_degree" class="form-select" aria-label="Виберіть зі списку">
+                                @foreach (object degree in academic_degree)
+                                {
+                                    if (degree.ToString() == result[7].ToString())
+                                    {
+                                        <option selected>@degree</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@degree</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Кафедра</label><select id="chair" class="form-select" aria-label="Виберіть зі списку">
+                                @foreach (object chair in chairs)
+                                {
+                                    if (chair.ToString() == result[8].ToString())
+                                    {
+                                        <option selected>@chair</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@chair</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Ваш рівень доступу</label><select id="category_access" class="form-select" aria-label="Виберіть зі списку">
+                                @foreach (object access in category_access)
+                                {
+                                    if (access.ToString() == result[9].ToString())
+                                    {
+                                        <option selected>@access</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@access</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>
+                        <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                </div>
+            </div>
+        }
     </div>
+</div>
 
