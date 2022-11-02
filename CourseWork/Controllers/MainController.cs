@@ -78,29 +78,6 @@ namespace CourseWork.Controllers
         #endregion
 
         #region User
-        public List<object[]> GetAllUsers()
-        {
-            NpgsqlCommand command = new NpgsqlCommand(
-            $"SELECT id_user_info, tb_users.login, second_name || ' ' ||  first_name || ' ' || middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, delete_date " +
-            $"FROM public.tb_users_info " +
-            $"LEFT JOIN public.tb_category_access ON tb_category_access.id_category_access = tb_users_info.id_category_access " +
-            $"LEFT JOIN public.tb_rank ON tb_rank.id_rank = tb_users_info.id_rank " +
-            $"LEFT JOIN public.tb_academic_degree ON tb_academic_degree.id_academic_degree = tb_users_info.id_academic_degree " +
-            $"LEFT JOIN public.tb_chair ON tb_chair.id_chair = tb_users_info.id_chair " +
-            $"LEFT JOIN public.tb_users ON tb_users.id_user = tb_users_info.id_user_info ORDER BY id_user_info", DataBase._connection);
-            DataBase._connection.Open();
-            NpgsqlDataReader reader = command.ExecuteReader();
-            List<object[]> result = new List<object[]>();
-            while (reader.Read())
-            {
-                result.Add(new object[10]);
-                reader.GetValues(result[result.Count - 1]);
-            }
-            DataBase._connection.Close();
-            return result;
-        }
-
-        #endregion
         public IActionResult UpdateUser(string name, string surname, string middlename, string phone, string email)
         {
             if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(middlename)
@@ -122,7 +99,7 @@ namespace CourseWork.Controllers
             {
                 command.ExecuteNonQuery();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 DataBase._connection.Close();
                 return new BadRequestObjectResult("База даних відхилила запит");
@@ -131,21 +108,55 @@ namespace CourseWork.Controllers
             return new OkResult();
         }
 
-        public object GetUser(int id)
+        public IActionResult DeleteUser(int id)
         {
-            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info, first_name, second_name, middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, user_photo, delete_date " +
-                $"FROM public.tb_users_info " +
-                $"JOIN public.tb_category_access ON tb_category_access.id_category_access = tb_users_info.id_category_access " +
-                $"JOIN public.tb_rank ON tb_rank.id_rank = tb_users_info.id_rank " +
-                $"JOIN public.tb_academic_degree ON tb_academic_degree.id_academic_degree = tb_users_info.id_academic_degree " +
-                $"JOIN public.tb_chair ON tb_chair.id_chair = tb_users_info.id_chair " +
-                $"WHERE id_user_info='{id}'", DataBase._connection);
+            if ((Request.Cookies["user_priv"] != "true"))
+                return new UnauthorizedResult();
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+                $"DELETE FROM tb_users WHERE id_user = {id}; " +
+                $"UPDATE tb_users_info SET delete_date = '{DateTime.Now.Date}' WHERE id_user_info = {id}; " +
+                $"call addlog({Request.Cookies["id_user"]}, 'delete_user', '{id}', 'tb_users', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT;", DataBase._connection);
             DataBase._connection.Open();
-            NpgsqlDataReader reader = command.ExecuteReader();
-            object[] result = new object[12];
-            while (reader.Read()) reader.GetValues(result);
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
             DataBase._connection.Close();
-            return result;
+            return new OkResult();
         }
+
+        #endregion
+
+        #region Chair
+        public IActionResult DeleteChair(int id)
+        {
+            if ((Request.Cookies["chair_priv"] != "true"))
+                return new UnauthorizedResult();
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+                $"DELETE FROM tb_chair WHERE id_chair = {id}; " +
+                $"call addlog({Request.Cookies["id_user"]}, 'delete_chair', '{id}', 'tb_chair', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT;", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+        #endregion
+
+
     }
 }
