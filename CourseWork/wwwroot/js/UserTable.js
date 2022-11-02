@@ -7,13 +7,11 @@ let restoreModal = new bootstrap.Modal(document.getElementById('restoreModal'), 
 let Id = 0;
 
 document.getElementById('confirmDeleteBtn').addEventListener("click", function (e) {
-    deleteModal.toggle();
-    alert(Id);
+    DeleteUser();
 });
 
 document.getElementById('restoreConfirm').addEventListener("click", function (e) {
     restoreModal.toggle();
-    alert(Id);
     alert(document.querySelector("#username").value);
     alert(document.querySelector("#password").value);
 });
@@ -23,7 +21,10 @@ document.getElementById('restoreConfirm').addEventListener("click", function (e)
 //    alert("Закриття");
 //})
 
-
+async function DeleteUser() {
+    deleteModal.toggle();
+    const query = await fetch(`https://localhost:7113/Main/DeleteUser?id=${Id}`);
+}
 function EditButton(id) {
     window.location = `ChangeUser?id=${id}`;
 }
