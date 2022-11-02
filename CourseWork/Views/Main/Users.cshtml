@@ -39,7 +39,7 @@
                                   <th scope="col">Кафедра</th>
                                   <th scope="col">Рівень доступу</th>
                                   <th scope="col">Дата видалення</th>
-                                <th scope="col"><button class="btn btn-primary btn-success" type="button" style="width:210px" onclick="AddButton()">Додати нового користувача</button></th>
+                                <th scope="col"><button class="btn btn-primary btn-success" type="button" style="width:220px" onclick="AddButton()">Додати нового користувача</button></th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -55,7 +55,7 @@
                                   <td>@row[7]</td>
                                   <td>@row[8]</td>
                                   <td>@row[9]</td>
-                                <td style="width:220px;">
+                                <td style="width:230px;">
                                     <button class="btn btn-primary btn-success" type="button" onclick="EditButton(@row[0].ToString())">Редагувати</button>
                                   @if(!String.IsNullOrEmpty(row[1].ToString())){
                                         <button class="btn btn-primary btn-danger" type="button" onclick="DeleteButton(@row[0].ToString())">Видалити</button>

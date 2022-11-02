@@ -36,7 +36,7 @@ async function onSaveClick() {
             modal.toggle();
     }
     else {
-        const query = await fetch(`https://localhost:7113/Main/ChangeUserAdmin?id=${id}&name=${name.value}&surname=${surname.value}&middlename=${middlename.value}&phone=${phone.value}&email=${email.value}&rank=${rank.value}&degree=${degree.value}&chair=${chair.value}&level=${access.value}`);
+        const query = await fetch(`https://localhost:7113/Main/AddUser?name=${name.value}&surname=${surname.value}&middlename=${middlename.value}&phone=${phone.value}&email=${email.value}&rank=${rank.value}&degree=${degree.value}&chair=${chair.value}&level=${access.value}`);
         const status = query.status;
         if (status != 200) {
             const response = await query.text();
