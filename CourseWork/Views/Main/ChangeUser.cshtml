@@ -47,13 +47,13 @@
             readera = commanda.ExecuteReader();
             while (readera.Read()) category_access.Add(readera.GetValue(0));
             DataBase._connection.Close();
-            <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
-            </div>
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        @if (ViewBag.UserId == -1)
+                <div class="col-md-3 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
+                </div>
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            @if (ViewBag.UserId == -1)
                         {
                             <h4 class="text-right">Створення користувача</h4>
                         }
@@ -61,90 +61,106 @@
                         {
                             <h4 class="text-right">Редагування користувача</h4>
                         }
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Прізвище</label><input id="second_name" type="text" class="form-control" placeholder="Ваше Прізвище" value="@result[2]"></div>
-                        <div class="col-md-6"><label class="labels">Ім'я</label><input id="first_name" type="text" class="form-control" value="@result[1]" placeholder="Ваше Ім'я"></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">По батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ваше ім'я по батькові" value="@result[3]"></div>
-                        <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value="@result[4]"></div>
-                        <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value="@result[5]"></div>
-                        <div class="col-md-12">
-                            <label class="labels">Посада</label><select id="rank" class="form-select" aria-label="Виберіть зі списку">
-                                @foreach (object rank in ranks)
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Прізвище</label><input id="second_name" type="text" class="form-control" placeholder="Ваше Прізвище" value="@result[2]"></div>
+                            <div class="col-md-6"><label class="labels">Ім'я</label><input id="first_name" type="text" class="form-control" value="@result[1]" placeholder="Ваше Ім'я"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">По батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ваше ім'я по батькові" value="@result[3]"></div>
+                            <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value="@result[4]"></div>
+                            <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value="@result[5]"></div>
+                            <div class="col-md-12">
+                                <label class="labels">Посада</label><select id="rank" class="form-select" aria-label="Виберіть зі списку">
+                                    @foreach (object rank in ranks)
                                 {
                                     if (rank.ToString() == result[6].ToString())
                                     {
-                                        <option selected>@rank</option>
+                                            <option selected>@rank</option>
                                     }
                                     else
                                     {
-                                        <option>@rank</option>
+                                            <option>@rank</option>
                                     }
                                 }
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Академічний рівень</label><select id="academic_degree" class="form-select" aria-label="Виберіть зі списку">
-                                @foreach (object degree in academic_degree)
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Академічний рівень</label><select id="academic_degree" class="form-select" aria-label="Виберіть зі списку">
+                                    @foreach (object degree in academic_degree)
                                 {
                                     if (degree.ToString() == result[7].ToString())
                                     {
-                                        <option selected>@degree</option>
+                                            <option selected>@degree</option>
                                     }
                                     else
                                     {
-                                        <option>@degree</option>
+                                            <option>@degree</option>
                                     }
                                 }
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Кафедра</label><select id="chair" class="form-select" aria-label="Виберіть зі списку">
-                                @foreach (object chair in chairs)
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Кафедра</label><select id="chair" class="form-select" aria-label="Виберіть зі списку">
+                                    @foreach (object chair in chairs)
                                 {
                                     if (chair.ToString() == result[8].ToString())
                                     {
-                                        <option selected>@chair</option>
+                                            <option selected>@chair</option>
                                     }
                                     else
                                     {
-                                        <option>@chair</option>
+                                            <option>@chair</option>
                                     }
                                 }
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Ваш рівень доступу</label><select id="category_access" class="form-select" aria-label="Виберіть зі списку">
-                                @foreach (object access in category_access)
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="labels">Ваш рівень доступу</label><select id="category_access" class="form-select" aria-label="Виберіть зі списку">
+                                    @foreach (object access in category_access)
                                 {
                                     if (access.ToString() == result[9].ToString())
                                     {
-                                        <option selected>@access</option>
+                                            <option selected>@access</option>
                                     }
                                     else
                                     {
-                                        <option>@access</option>
+                                            <option>@access</option>
                                     }
                                 }
-                            </select>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>
+                            <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>
-                        <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                        <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                        <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
-                </div>
-            </div>
         }
     </div>
 </div>
-
+<div class="modal fade" id="operation_success" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Увага</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Зміни внесено
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmBtn" class="btn btn-success">Зрозуміло</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/ChangeUser.js" type="module"></script>

@@ -57,7 +57,7 @@
                                   <td>@row[9]</td>
                                 <td style="width:220px;">
                                     <button class="btn btn-primary btn-success" type="button" onclick="EditButton(@row[0].ToString())">Редагувати</button>
-                                  @if(String.IsNullOrEmpty(row[9].ToString())){
+                                  @if(!String.IsNullOrEmpty(row[1].ToString())){
                                         <button class="btn btn-primary btn-danger" type="button" onclick="DeleteButton(@row[0].ToString())">Видалити</button>
                                         Console.WriteLine(row[0]);
                                     }
