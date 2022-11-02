@@ -1,5 +1,5 @@
 ﻿function AddButton() {
-
+    window.location = `ChangeUser?id=${-1}`;
 }
 
 let deleteModal = new bootstrap.Modal(document.getElementById('deleteBackDrop'), { backdrop: true, keyboard: true, focus: true });
