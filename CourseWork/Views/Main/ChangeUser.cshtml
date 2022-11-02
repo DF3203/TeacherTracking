@@ -8,7 +8,7 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         @{
-            object[] result = new object[12];
+            object[] result = new object[12] {"","","","","","","","","","","",""};
             if (ViewBag.UserId >= 0)
             {
                 NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info, first_name, second_name, middle_name, email, phone, tb_rank.name_rank, tb_academic_degree.name_academic_degree, tb_chair.name_chair, tb_category_access.name_category_access, user_photo, delete_date " +
