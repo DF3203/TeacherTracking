@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Npgsql;
+using System.Numerics;
+using System.Xml.Linq;
 
 namespace CourseWork.Controllers
 {
@@ -116,6 +118,78 @@ namespace CourseWork.Controllers
                 $"DELETE FROM tb_users WHERE id_user = {id}; " +
                 $"UPDATE tb_users_info SET delete_date = '{DateTime.Now.Date}' WHERE id_user_info = {id}; " +
                 $"call addlog({Request.Cookies["id_user"]}, 'delete_user', '{id}', 'tb_users', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT;", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+
+        public IActionResult ChangeUserAdmin(int id, string name, string surname, string middlename, string phone, 
+            string email, string rank, string degree, string chair, string level)
+        {
+            if ((Request.Cookies["user_priv"] != "true"))
+                return new UnauthorizedResult();
+            if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(middlename)
+                || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(email))
+                return new BadRequestObjectResult("Поля не можуть бути пустими");
+            name = name.Replace(" ", "");
+            surname = surname.Replace(" ", "");
+            middlename = middlename.Replace(" ", "");
+            phone = phone.Replace(" ", "");
+            email = email.Replace(" ", "");
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+                $"update tb_users_info " +
+                $"set first_name = '{name}', second_name = '{surname}', middle_name = '{middlename}', email = '{email}', " +
+                $"phone = '{phone}', id_rank = (select id_rank from tb_rank where name_rank = '{rank}'), " +
+                $"id_academic_degree = (select id_academic_degree from tb_academic_degree where name_academic_degree = '{degree}'), " +
+                $"id_chair = (select id_chair from tb_chair where name_chair = '{chair}'), " +
+                $"id_category_access = (select id_category_access from tb_category_access where name_category_access = '{level}') " +
+                $"where id_user_info = {id}; " +
+                $"CALL addlog({Request.Cookies["id_user"]}, 'changed_user', '{id}', 'tb_users_info', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT;", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+
+        public IActionResult AddUser(string name, string surname, string middlename, string phone,
+            string email, string rank, string degree, string chair, string level)
+        {
+            if ((Request.Cookies["user_priv"] != "true"))
+                return new UnauthorizedResult();
+            if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(surname) || String.IsNullOrEmpty(middlename)
+                || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(email))
+                return new BadRequestObjectResult("Поля не можуть бути пустими");
+            name = name.Replace(" ", "");
+            surname = surname.Replace(" ", "");
+            middlename = middlename.Replace(" ", "");
+            phone = phone.Replace(" ", "");
+            email = email.Replace(" ", "");
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+                $"insert into tb_users_info (first_name, second_name, middle_name, email, phone, id_rank, id_academic_degree, id_chair, id_category_access) " +
+                $"values ('{name}', '{surname}', '{middlename}', '{email}', '{phone}', " +
+                $"(select id_rank from tb_rank where name_rank = '{rank}'), " +
+                $"(select id_academic_degree from tb_academic_degree where name_academic_degree = '{degree}'), " +
+                $"(select id_chair from tb_chair where name_chair = '{chair}'), " +
+                $"(select id_category_access from tb_category_access where name_category_access = '{level}')); " +
                 $"COMMIT;", DataBase._connection);
             DataBase._connection.Open();
             try
