@@ -29,7 +29,7 @@
                             <th scope="col">Назва інституту</th>
                             <th scope="col">Скорочена назва</th>
                             <th scope="col">Директор</th>
-                             <th scope="col"><button class="btn btn-primary btn-success" type="button" onclick="AddButton()">Додати новий інститут</button></th>
+                             <th scope="col"><button class="btn btn-primary btn-success" style="width:210px" type="button" onclick="AddButton()">Додати новий інститут</button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +40,7 @@
                                 <td>@row[1]</td>
                                 <td>@row[2]</td>
                                 <td>@row[3]</td>
-                                <td>
+                                <td style="width:220px">
                                     <button class="btn btn-primary btn-success" type="button" onclick="EditButton(@row[0])">Редагувати</button>
                                     <button class="btn btn-primary btn-danger" type="button" onclick="DeleteButton(@row[0])">Видалити</button>
                                 </td>
