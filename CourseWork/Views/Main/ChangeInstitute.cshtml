@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Курсова робота";
+    Layout = "_Layout";
+}
+@using Npgsql;
+@using Microsoft.AspNetCore.Mvc;
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        @{
+            object[] result = new object[4] {"","","",""};
+            if (ViewBag.InstituteId >= 0)
+            {
+                NpgsqlCommand command = new NpgsqlCommand($"SELECT id_institute, name_institute, abbreviation_institute, tui.second_name || ' ' || tui.first_name || ' ' || tui.middle_name "+ 
+                $"FROM tb_institute " + 
+                $"LEFT JOIN tb_users_info tui on tb_institute.id_user_chief = tui.id_user_info "+
+                $"WHERE tb_institute.id_institute='{ViewBag.InstituteId}'", DataBase._connection);
+                DataBase._connection.Open();
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read()) reader.GetValues(result);
+                DataBase._connection.Close();
+            }
+            List<object> users = new List<object> { };
+            NpgsqlCommand commanda = new NpgsqlCommand($"SELECT tui.second_name || ' ' || tui.first_name || ' ' || tui.middle_name FROM public.tb_users_info tui", DataBase._connection);
+            DataBase._connection.Open();
+            NpgsqlDataReader readera = commanda.ExecuteReader();
+            while (readera.Read()) users.Add(readera.GetValue(0));
+            DataBase._connection.Close();
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            @if (ViewBag.InstituteId == -1)
+                        {
+                            <h4 class="text-right">Створення інститута</h4>
+                        }
+                        else
+                        {
+                            <h4 class="text-right">Редагування інститута</h4>
+                        }
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">Назва інституту</label><input id="institute_name" type="text" class="form-control" placeholder="Назва інституту" value="@result[1]"></div>
+                            <div class="col-md-12"><label class="labels">Скорочена назва</label><input id="institute_abbr" type="text" class="form-control" placeholder="Скорочена назва" value="@result[2]"></div>
+                            <div class="col-md-12">
+                                <label class="labels">Директор</label><select id="user_chief" class="selectpicker" data-show-subtext="true" data-live-search="true" aria-label="Виберіть зі списку">
+                                    @foreach (object user in users)
+                                {
+                                    if (user.ToString() == result[3].ToString())
+                                    {
+                                            <option selected>@user</option>
+                                    }
+                                    else
+                                    {
+                                            <option>@user</option>
+                                    }
+                                }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти</button></div>
+                            <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
+</div>
+<div class="modal fade" id="operation_success" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Увага</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Зміни внесено
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmBtn" class="btn btn-success">Зрозуміло</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/ChangeUser.js" type="module"></script>

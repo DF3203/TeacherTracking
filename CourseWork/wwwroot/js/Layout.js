@@ -102,12 +102,11 @@ document.querySelector('.menu').addEventListener("click", function (e) {
                 "infoFiltered": "(Відібрано з _MAX_ записів)"
             },
         });
-        //document.querySelector("#DataTables_Table_0_filter").style.display = "flex";
         document.querySelector(".col-sm-12").innerHTML = "<h2>Таблиця</h2>";
         document.querySelector("#DataTables_Table_0_wrapper > div:nth-child(1) > div:nth-child(2)").style.display = "flex";
-        //document.querySelector("#DataTables_Table_0_wrapper > div:nth-child(1) > div:nth-child(2)").style.alignItems = "flex-end";
         document.querySelector("#DataTables_Table_0_wrapper > div:nth-child(1) > div:nth-child(2)").style.justifyContent = "right";
-        document.querySelector("#DataTables_Table_0_filter > label").style.padding = "0px 100px 0px 0px";
+        document.querySelector("#DataTables_Table_0_filter > label").style.padding = "0px 20px 0px 0px";
+        document.querySelector("#DataTables_Table_0_filter > label").style.width = "300px";
 });
 
 

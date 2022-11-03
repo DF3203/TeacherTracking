@@ -150,4 +150,7 @@ section {
     z-index: 100;
     opacity: 0.6;
 }
+.btn{
+    min-width:107px;
+}
 

@@ -55,15 +55,14 @@
                                   <td>@row[7]</td>
                                   <td>@row[8]</td>
                                   <td>@row[9]</td>
-                                <td style="width:230px;">
-                                    <button class="btn btn-primary btn-success" type="button" onclick="EditButton(@row[0].ToString())">Редагувати</button>
+                                <td style="width:240px;">
+                                    <button class="btn btn-success" type="button" onclick="EditButton(@row[0].ToString())">Редагувати</button>
                                   @if(!String.IsNullOrEmpty(row[1].ToString())){
-                                        <button class="btn btn-primary btn-danger" type="button" onclick="DeleteButton(@row[0].ToString())">Видалити</button>
-                                        Console.WriteLine(row[0]);
+                                        <button class="btn btn-danger" type="button" onclick="DeleteButton(@row[0].ToString())">Видалити</button>
                                     }
                                 else
                                 {
-                                                <button class="btn btn-primary btn-info" type="button" onclick="RestoreButton(@row[0].ToString())">Відновити</button>
+                                       <button class="btn btn-primary" type="button" onclick="RestoreButton(@row[0].ToString())">Відновити</button>
                                 }
                                     </td>
                                         </tr>
@@ -120,5 +119,5 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="~/js/UserTable.js" ></script>
+<script src="~/js/UserTable.js"></script>
 

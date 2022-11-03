@@ -77,6 +77,16 @@ namespace CourseWork.Controllers
                 return View();
             }
         }
+        public IActionResult ChangeInstitute(int id)
+        {
+            if (Request.Cookies["inst_priv"] != "true")
+                return new UnauthorizedResult();
+            else
+            {
+                ViewBag.InstituteId = id;
+                return View();
+            }
+        }
         #endregion
 
         #region User
