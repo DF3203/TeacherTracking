@@ -6,6 +6,8 @@
 @using Microsoft.AspNetCore.Mvc;
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
         @{
             object[] result = new object[4] {"","","",""};
             if (ViewBag.InstituteId >= 0)
@@ -41,7 +43,7 @@
                             <div class="col-md-12"><label class="labels">Назва інституту</label><input id="institute_name" type="text" class="form-control" placeholder="Назва інституту" value="@result[1]"></div>
                             <div class="col-md-12"><label class="labels">Скорочена назва</label><input id="institute_abbr" type="text" class="form-control" placeholder="Скорочена назва" value="@result[2]"></div>
                             <div class="col-md-12">
-                                <label class="labels">Директор</label><select id="user_chief" class="selectpicker" data-show-subtext="true" data-live-search="true" aria-label="Виберіть зі списку">
+                                <label class="labels">Директор</label> <select id="user_chief" class="selectpicker" data-live-search="true" aria-label="Виберіть зі списку">
                                     @foreach (object user in users)
                                 {
                                     if (user.ToString() == result[3].ToString())
@@ -81,4 +83,7 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <script src="~/js/ChangeUser.js" type="module"></script>
