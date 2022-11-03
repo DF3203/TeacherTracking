@@ -272,9 +272,89 @@ namespace CourseWork.Controllers
             if ((Request.Cookies["inst_priv"] != "true"))
                 return new UnauthorizedResult();
             NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
-                $"DELETE FROM tb_institute WHERE id_instutute = {id}; " +
+                $"DELETE FROM tb_institute WHERE id_institute = {id}; " +
                 $"call addlog({Request.Cookies["id_user"]}, 'delete_institute', '{id}', 'tb_institute', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
                 $"COMMIT;", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+
+        public IActionResult AddInstitute(string name, string abbreviation, string chief)
+        {
+            if ((Request.Cookies["inst_priv"] != "true"))
+                return new UnauthorizedResult();
+            int user_id = -1;
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{chief}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read()) 
+                    user_id = Convert.ToInt16(reader.GetValue(0));
+                if (user_id == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+            DataBase._connection.Close();
+            command = new NpgsqlCommand($"BEGIN; " +
+                $"INSERT INTO tb_institute (name_institute, abbreviation_institute, id_user_chief) values ('{name}', '{abbreviation}', {user_id}); " +
+                $"call addlog({Request.Cookies["id_user"]}, 'change_institute', 'new_institute', 'tb_institute', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT; ", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+
+        public IActionResult UpdateInstitute(string id,string name, string abbreviation, string chief)
+        {
+            if ((Request.Cookies["inst_priv"] != "true"))
+                return new UnauthorizedResult();
+            int user_id = -1;
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{chief}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    user_id = Convert.ToInt16(reader.GetValue(0));
+                if (user_id == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+            DataBase._connection.Close();
+            command = new NpgsqlCommand($"BEGIN; " +
+                $"UPDATE tb_institute " +
+                $"SET name_institute = '{name}', abbreviation_institute = '{abbreviation}', id_user_chief = {user_id} " +
+                $"WHERE id_institute = {id}; " +
+                $"call addlog({Request.Cookies["id_user"]}, 'change_institute', '{user_id}', 'tb_institute', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT; ", DataBase._connection);
             DataBase._connection.Open();
             try
             {

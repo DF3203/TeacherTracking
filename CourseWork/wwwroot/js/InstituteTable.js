@@ -1,28 +1,23 @@
 ﻿function AddButton() {
     window.location = `ChangeInstitute?id=${-1}`;
 }
-
 let deleteModal = new bootstrap.Modal(document.getElementById('deleteBackDrop'), { backdrop: true, keyboard: true, focus: true });
-let Id = 0;
+
+let _Id = 0;
+
+function DeleteButton(id) {
+    _Id = id;
+    deleteModal.toggle();
+}
 
 document.getElementById('confirmDeleteBtn').addEventListener("click", function (e) {
     DeleteInstitute();
 });
 
-
-
-//document.getElementById('deleteBackDrop').addEventListener('hidden.bs.modal', function (event) {
-//    alert("Закриття");
-//})
-
 async function DeleteInstitute() {
     deleteModal.toggle();
-    const query = await fetch(`https://localhost:7113/Main/DeleteInstitute?id=${Id}`);
+    const query = await fetch(`https://localhost:7113/Main/DeleteInstitute?id=${_Id}`);
 }
 function EditButton(id) {
     window.location = `ChangeInstitute?id=${id}`;
-}
-function DeleteButton(id) {
-    Id = id;
-    deleteModal.toggle();
 }
