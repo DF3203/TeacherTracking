@@ -1,7 +1,6 @@
 ﻿function AddButton() {
     window.location = `ChangeUser?id=${-1}`;
 }
-document.querySelector("#DataTables_Table_0_wrapper > div:nth-child(1) > div:nth-child(1)").innerHTML = "<h2>Користувачі</h2>";
 let deleteModal = new bootstrap.Modal(document.getElementById('deleteBackDrop'), { backdrop: true, keyboard: true, focus: true });
 let restoreModal = new bootstrap.Modal(document.getElementById('restoreModal'), { backdrop: true, keyboard: true, focus: true });
 let Id = 0;
