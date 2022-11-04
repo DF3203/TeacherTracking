@@ -58,5 +58,24 @@
         }
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteBackDrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Увага</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Чи дійсно хочете видалити користувача?
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmDeleteBtn" class="btn btn-success">Так</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/FacultyTable.js"></script>

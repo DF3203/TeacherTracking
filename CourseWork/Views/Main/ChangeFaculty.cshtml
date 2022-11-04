@@ -47,14 +47,19 @@
                                 <div class="col-md-12"><label class="labels">Назва факультету</label><textarea id="name" type="text" class="form-control" rows=3 placeholder="Назва факультету">@result[1]</textarea></div>
                                 <div class="col-md-12"><label class="labels">Скорочена назва</label><input id="abbr" type="text" class="form-control" placeholder="Скорочена назва" value="@result[2]"></div>
                                 <div class="col-md-12">
-                                    <label class="labels">Інститут</label> 
-                                    <input id="institute" list="insts" type="text" class="form-control" placeholder="Інститут" value="@result[3]">
-                                    <datalist id="insts">
-                                        @foreach (object institute in institutes)
+                                <label class="labels">Інститут</label><select id="institute" class="form-select" aria-label="Виберіть зі списку">
+                                @foreach (object institute in institutes)
                                 {
-                                                <option value="@institute"></option>
+                                if (institute.ToString() == result[3].ToString())
+                                {
+                                <option selected>@institute</option>
                                 }
-                                    </datalist>
+                                 else
+                                    {
+                                    <option>@institute</option>
+                                    }
+                                }
+                            </select>
                              </div>
                                 <div class="col-md-12">
                                     <label class="labels">Декан</label> 
