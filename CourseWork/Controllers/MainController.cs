@@ -200,6 +200,32 @@ namespace CourseWork.Controllers
             return new OkResult();
         }
 
+        public IActionResult ActivateUser(int id, string login, string password)
+        {
+            if ((Request.Cookies["user_priv"] != "true"))
+                return new UnauthorizedResult();
+            NpgsqlCommand command = new NpgsqlCommand($"BEGIN; " +
+               $"UPDATE tb_users_info " +
+               $"SET delete_date = NULL " +
+               $"where id_user_info = {id}; " +
+               $"CALL insertuser({id}, '{login}', '{password}'); " +
+               $"call addlog({Request.Cookies["id_user"]}, 'activate_user', '{id}', 'tb_users', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+               $"COMMIT;", DataBase._connection);
+
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+
+            DataBase._connection.Close();
+            return new OkResult();
+        }
         public IActionResult AddUser(string name, string surname, string middlename, string phone,
             string email, string rank, string degree, string chair, string level)
         {

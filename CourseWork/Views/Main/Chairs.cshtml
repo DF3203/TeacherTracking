@@ -12,7 +12,7 @@
             $"SELECT tb_chair.id_chair, name_chair, tf.abbreviation_faculty, tui.second_name || ' ' || tui.first_name || ' ' || tui.middle_name, tui.second_name || ' ' || tui.first_name || ' ' || tui.middle_name " +
                 $"FROM tb_chair " +
                 $"LEFT JOIN tb_faculty tf on tb_chair.id_faculty = tf.id_faculty " +
-                $"LEFT JOIN tb_users_info tui on tb_chair.id_user_chief = tui.id_chair " +
+                $"LEFT JOIN tb_users_info tui on tb_chair.id_user_chief = tui.id_user_info " +
                 $"ORDER BY tb_chair.id_chair; ", DataBase._connection);
             DataBase._connection.Open();
             NpgsqlDataReader reader = command.ExecuteReader();
@@ -52,4 +52,5 @@
 }
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/ChairTable.js"></script>

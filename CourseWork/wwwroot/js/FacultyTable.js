@@ -17,6 +17,7 @@ document.getElementById('confirmDeleteBtn').addEventListener("click", function (
 async function DeleteFaculty() {
     deleteModal.toggle();
     const query = await fetch(`https://localhost:7113/Main/DeleteFaculty?id=${_Id}`);
+    window.location = '';
 }
 function EditButton(id) {
     window.location = `ChangeFaculty?id=${id}`;

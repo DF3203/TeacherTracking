@@ -17,6 +17,7 @@ document.getElementById('confirmDeleteBtn').addEventListener("click", function (
 async function DeleteChair() {
     deleteModal.toggle();
     const query = await fetch(`https://localhost:7113/Main/DeleteChair?id=${_Id}`);
+    window.location = '';
 }
 function EditButton(id) {
     window.location = `ChangeChair?id=${id}`;

@@ -10,9 +10,7 @@ document.getElementById('confirmDeleteBtn').addEventListener("click", function (
 });
 
 document.getElementById('restoreConfirm').addEventListener("click", function (e) {
-    restoreModal.toggle();
-    alert(document.querySelector("#username").value);
-    alert(document.querySelector("#password").value);
+    ActivateUser();
 });
 
 
@@ -23,6 +21,12 @@ document.getElementById('restoreConfirm').addEventListener("click", function (e)
 async function DeleteUser() {
     deleteModal.toggle();
     const query = await fetch(`https://localhost:7113/Main/DeleteUser?id=${Id}`);
+    window.location = '';
+}
+async function ActivateUser() {
+    const query = await fetch(`https://localhost:7113/Main/ActivateUser?id=${Id}&login=${document.querySelector("#username").value}&password=${document.querySelector("#password").value}`);
+    restoreModal.toggle();
+    window.location = '';
 }
 function EditButton(id) {
     window.location = `ChangeUser?id=${id}`;
