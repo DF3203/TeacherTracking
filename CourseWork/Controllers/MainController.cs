@@ -200,7 +200,9 @@ namespace CourseWork.Controllers
                 $"(select id_academic_degree from tb_academic_degree where name_academic_degree = '{degree}'), " +
                 $"(select id_chair from tb_chair where name_chair = '{chair}'), " +
                 $"(select id_category_access from tb_category_access where name_category_access = '{level}')); " +
+                $"call addlog({Request.Cookies["id_user"]}, 'add_user', 'new_user', 'tb_users_info', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
                 $"COMMIT;", DataBase._connection);
+
             DataBase._connection.Open();
             try
             {
@@ -211,6 +213,7 @@ namespace CourseWork.Controllers
                 DataBase._connection.Close();
                 return new BadRequestObjectResult(command.CommandText);
             }
+
             DataBase._connection.Close();
             return new OkResult();
         }
@@ -312,7 +315,7 @@ namespace CourseWork.Controllers
             DataBase._connection.Close();
             command = new NpgsqlCommand($"BEGIN; " +
                 $"INSERT INTO tb_institute (name_institute, abbreviation_institute, id_user_chief) values ('{name}', '{abbreviation}', {user_id}); " +
-                $"call addlog({Request.Cookies["id_user"]}, 'change_institute', 'new_institute', 'tb_institute', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"call addlog({Request.Cookies["id_user"]}, 'add_institute', 'new_institute', 'tb_institute', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
                 $"COMMIT; ", DataBase._connection);
             DataBase._connection.Open();
             try
