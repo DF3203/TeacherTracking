@@ -87,6 +87,26 @@ namespace CourseWork.Controllers
                 return View();
             }
         }
+        public IActionResult ChangeFaculty(int id)
+        {
+            if (Request.Cookies["fac_priv"] != "true")
+                return new UnauthorizedResult();
+            else
+            {
+                ViewBag.FacultyId = id;
+                return View();
+            }
+        }
+        public IActionResult ChangeChair(int id)
+        {
+            if (Request.Cookies["chair_priv"] != "true")
+                return new UnauthorizedResult();
+            else
+            {
+                ViewBag.ChairId = id;
+                return View();
+            }
+        }
         #endregion
 
         #region User
