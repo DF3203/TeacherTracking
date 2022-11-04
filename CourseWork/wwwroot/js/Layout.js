@@ -4,6 +4,7 @@ let navop=false;
 
 Cookies.checkCookie();
 let exitModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), { backdrop: true, keyboard: true, focus: true });
+let backupModal = new bootstrap.Modal(document.getElementById('backup'), { backdrop: true, keyboard: true, focus: true });
 
 document.getElementById('exitbtn').addEventListener("click", function (e) {
     exitModal.toggle();
@@ -56,7 +57,7 @@ catch { };
 
 async function CopyClick() {
     const query = await fetch(`https://localhost:7113/Main/CreateCopy`);
-    async
+    backupModal.toggle();
 //sidebad js
 
 }
