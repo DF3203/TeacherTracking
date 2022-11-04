@@ -4,18 +4,35 @@ using System.Diagnostics;
 using Npgsql;
 using System.Numerics;
 using System.Xml.Linq;
+using System.IO;
 
 namespace CourseWork.Controllers
 {
     public class MainController : Controller
     {
-
+        public IActionResult LoadBackup(DateTime date)
+        {
+            if ((Request.Cookies["chair_priv"] != "true") || (Request.Cookies["fac_priv"] != "true") || (Request.Cookies["inst_priv"] != "true") || (Request.Cookies["user_priv"] != "true"))
+                return new BadRequestObjectResult("Немає прав");
+            if (!System.IO.File.Exists($"C:\\Users\\viach\\Desktop\\{date.Day}.{date.Month}.{date.Year}"))
+                return new BadRequestObjectResult($"Копії бази даних за {date.Day}.{date.Month}.{date.Year} немає");
+            string command = $"\"C:\\Program Files\\PostgreSQL\\11\\bin\\pg_restore.exe\" --dbname=postgresql://postgres:1304@localhost:5432/Teachers -Fc < C:\\Users\\viach\\Desktop\\{date.Day}.{date.Month}.{date.Year}";
+            System.Diagnostics.Process.Start("cmd.exe", "/C " + command);
+            return new OkResult();
+        }
 
         #region Pages
         public IActionResult Index()
         {
+            if(!System.IO.File.Exists($"C:\\Users\\viach\\Desktop\\db.{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}{DateTime.Now.Date}"))
+            {
+                string command = $"\"C:\\Program Files\\PostgreSQL\\11\\bin\\pg_dump.exe\" --format=c --dbname=postgresql://postgres:1304@localhost/Teachers " +
+                    $"> C:\\Users\\viach\\Desktop\\{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}";
+                System.Diagnostics.Process.Start("cmd.exe", "/C " + command);
+            }
             return View();
         }
+
         public IActionResult Users()
         {
             if (Request.Cookies["user_priv"] != "true")
@@ -108,12 +125,6 @@ namespace CourseWork.Controllers
             }
         }
         #endregion
-        public IActionResult CreateCopy()
-        {
-            string command = "\"C:\\Program Files\\PostgreSQL\\11\\bin\\pg_dump.exe\" --format=c --dbname=postgresql://postgres:1304@localhost/Teachers > C:\\Users\\viach\\Desktop\\db.dump";
-            System.Diagnostics.Process.Start("cmd.exe", "/C " + command);
-            return new OkResult();
-        }
 
         #region User
         public IActionResult UpdateUser(string name, string surname, string middlename, string phone, string email)
