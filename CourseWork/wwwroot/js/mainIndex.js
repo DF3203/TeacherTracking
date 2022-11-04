@@ -13,7 +13,7 @@ document.querySelector('#reloadBtn').addEventListener('click', function () {
 
 
 async function onSaveClick() { 
-    const query = await fetch(`https://localhost:7113/Main/UpdateUser/LogIn?name=${f_name.value}&surname=${s_name.value}&middlename=${m_name.value}&phone=${phone.value}&email=${email.value}`);
+    const query = await fetch(`https://localhost:7113/Main/UpdateUser?name=${f_name.value}&surname=${s_name.value}&middlename=${m_name.value}&phone=${phone.value}&email=${email.value}`);
     const status = query.status;
     if (status != 200)
     {

@@ -4,7 +4,7 @@ let navop=false;
 
 Cookies.checkCookie();
 let exitModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), { backdrop: true, keyboard: true, focus: true });
-let backupModal = new bootstrap.Modal(document.getElementById('backup'), { backdrop: true, keyboard: true, focus: true });
+let loadModal = new bootstrap.Modal(document.getElementById('loadModal'), { backdrop: true, keyboard: true, focus: true });
 
 document.getElementById('exitbtn').addEventListener("click", function (e) {
     exitModal.toggle();
@@ -49,18 +49,30 @@ try {
 }
 catch { };
 try {
-    document.getElementById('copybtn').addEventListener("click", function () {
-        CopyClick();
+    document.getElementById('loadbtn').addEventListener("click", function () {
+        loadModal.toggle(); 
     });
 }
 catch { };
+//sidebar
 
-async function CopyClick() {
-    const query = await fetch(`https://localhost:7113/Main/CreateCopy`);
-    backupModal.toggle();
-//sidebad js
+document.getElementById('loadConfirm').addEventListener("click", function (e) {
+    ActivateBackup(document.querySelector('#dateactivate').value);
+});
 
+
+async function ActivateBackup(date) {
+    loadModal.toggle();
+    const query = await fetch(`https://localhost:7113/Main/LoadBackup?date=${date}`);
+    const status = query.status;
+    if (status != 200) {
+        const response = await query.text();
+        Cookies.callToast(false, response);
+    }
+    else
+        Cookies.callToast(true, "Бекап завантажано");
 }
+
 document.querySelector('#mainbtn').addEventListener("click", function() {
     window.location = "Index";
 })
