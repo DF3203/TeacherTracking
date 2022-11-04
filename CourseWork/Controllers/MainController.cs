@@ -262,6 +262,88 @@ namespace CourseWork.Controllers
             DataBase._connection.Close();
             return new OkResult();
         }
+
+        public IActionResult AddChair(string name, string faculty, string chief)
+        {
+            if ((Request.Cookies["inst_priv"] != "true"))
+                return new UnauthorizedResult();
+            int user_id = -1;
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{chief}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    user_id = Convert.ToInt16(reader.GetValue(0));
+                if (user_id == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+            DataBase._connection.Close();
+            command = new NpgsqlCommand($"BEGIN; " +
+                $"INSERT INTO tb_chair (name_chair, id_faculty, id_user_chief) values ('{name}', " +
+                $"(SELECT id_faculty FROM tb_faculty WHERE abbreviation_faculty = '{faculty}'), {user_id}); " +
+                $"call addlog({Request.Cookies["id_user"]}, 'add_chair', 'new_chair', 'tb_chair', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT; ", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+
+        public IActionResult UpdateChair(string id, string name, string faculty, string chief)
+        {
+            if ((Request.Cookies["inst_priv"] != "true"))
+                return new UnauthorizedResult();
+            int user_id = -1;
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{chief}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    user_id = Convert.ToInt16(reader.GetValue(0));
+                if (user_id == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+            DataBase._connection.Close();
+            command = new NpgsqlCommand($"BEGIN; " +
+                $"UPDATE tb_chair " +
+                $"SET name_chair = '{name}', " +
+                $"id_faculty = (SELECT id_faculty FROM tb_faculty WHERE abbreviation_faculty = '{faculty}'),  id_user_chief = {user_id}" +
+                $"WHERE id_chair = {id}; " +
+                $"call addlog({Request.Cookies["id_user"]}, 'change_chair', '{user_id}', 'tb_chair', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT; ", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
         #endregion
 
         #region Faculty
