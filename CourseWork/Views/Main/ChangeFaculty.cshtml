@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Курсова робота";
+    Layout = "_Layout";
+}
+@using Npgsql;
+@using Microsoft.AspNetCore.Mvc;
+<div class="container-sm rounded w-25 bg-white mt-5 mb-5">
+        @{
+            object[] result = new object[6] {"","","","","",""};
+            if (ViewBag.FacultyId >= 0)
+            {
+                NpgsqlCommand command = new NpgsqlCommand($"SELECT id_faculty, name_faculty, abbreviation_faculty, tb_institute.abbreviation_institute, tui.second_name || ' ' || tui.first_name || ' ' || tui.middle_name, tui2.second_name || ' ' || tui2.first_name || ' ' || tui2.middle_name "+
+                $"FROM public.tb_faculty "+
+	$"LEFT JOIN tb_institute ON tb_faculty.id_institute=tb_institute.id_institute "+
+	$"LEFT JOIN tb_users_info tui on tb_faculty.id_user_dean = tui.id_user_info "+
+	$"LEFT JOIN tb_users_info tui2 on tb_faculty.id_user_deputy_dean = tui.id_user_info "+
+                $"WHERE tb_faculty.id_faculty='{ViewBag.FacultyId}'", DataBase._connection);
+                DataBase._connection.Open();
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read()) reader.GetValues(result);
+                DataBase._connection.Close();
+            }
+            List<object> institutes = new List<object> { };
+            List<object> users = new List<object> { };
+            NpgsqlCommand commanda = new NpgsqlCommand($"SELECT abbreviation_institute FROM public.tb_institute", DataBase._connection);
+            DataBase._connection.Open();
+            NpgsqlDataReader readera = commanda.ExecuteReader();
+            while (readera.Read()) institutes.Add(readera.GetValue(0));
+            DataBase._connection.Close();
+            commanda = new NpgsqlCommand($"SELECT tui.second_name || ' ' || tui.first_name || ' ' || tui.middle_name FROM public.tb_users_info tui", DataBase._connection);
+            DataBase._connection.Open();
+            readera = commanda.ExecuteReader();
+            while (readera.Read()) users.Add(readera.GetValue(0));
+            DataBase._connection.Close();
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                @if (ViewBag.FacultyId == -1)
+                        {
+                                <h4 class="text-right">Створення факультету</h4>
+                        }
+                        else
+                        {
+                                <h4 class="text-right">Редагування факультету</h4>
+                        }
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12"><label class="labels">Назва факультету</label><textarea id="name" type="text" class="form-control" rows=3 placeholder="Назва факультету">@result[1]</textarea></div>
+                                <div class="col-md-12"><label class="labels">Скорочена назва</label><input id="abbr" type="text" class="form-control" placeholder="Скорочена назва" value="@result[2]"></div>
+                                <div class="col-md-12">
+                                    <label class="labels">Інститут</label> 
+                                    <input id="institute" list="insts" type="text" class="form-control" placeholder="Інститут" value="@result[3]">
+                                    <datalist id="insts">
+                                        @foreach (object institute in institutes)
+                                {
+                                                <option value="@institute"></option>
+                                }
+                                    </datalist>
+                             </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Декан</label> 
+                                    <input id="dean" list="deans" type="text" class="form-control" placeholder="Декан" value="@result[4]">
+                                    <datalist id="deans">
+                                        @foreach (object user in users)
+                                {
+                                                <option value="@user"></option>
+                                }
+                                    </datalist>
+                             </div>
+                             <div class="col-md-12">
+                                    <label class="labels">Замісник декана</label> 
+                                    <input id="deputy-dean" list="deputy-deans" type="text" class="form-control" placeholder="Замісник декана" value="@result[5]">
+                                    <datalist id="deputy-deans">
+                                        @foreach (object user in users)
+                                {
+                                                <option value="@user"></option>
+                                }
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти</button></div>
+                                <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                            </div>
+                        </div>
+        }
+</div>
+<div class="modal fade" id="operation_success" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Увага</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Зміни внесено
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmBtn" class="btn btn-success">Зрозуміло</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/ChangeFaculty.js" type="module"></script>
