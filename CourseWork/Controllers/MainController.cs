@@ -286,6 +286,128 @@ namespace CourseWork.Controllers
             DataBase._connection.Close();
             return new OkResult();
         }
+
+        public IActionResult UpdateFaculty(int id, string name, string abbreviation,
+            string institute, string dean, string deputy)
+        {
+
+            if ((Request.Cookies["fac_priv"] != "true"))
+                return new UnauthorizedResult();
+            int _dean = -1;
+            int _deputy_dean = -1;
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{dean}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    _dean = Convert.ToInt16(reader.GetValue(0));
+                if (_dean == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+
+            command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{deputy}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    _deputy_dean = Convert.ToInt16(reader.GetValue(0));
+                if (_deputy_dean == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+            DataBase._connection.Close();
+            command = new NpgsqlCommand($"BEGIN; " +
+                $"UPDATE tb_faculty " +
+                $"SET name_faculty = '{name}', abbreviation_faculty = '{abbreviation}', " +
+                $"id_institute = (select id_institute from tb_institute where abbreviation_institute = '{institute}'), id_user_dean = {_dean}, " +
+                $"id_user_deputy_dean = {_deputy_dean} " +
+                $"WHERE id_faculty = {id}; " +
+                $"call addlog({Request.Cookies["id_user"]}, 'change_faculty', '{id}', 'tb_faculty', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT; ", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
+
+        public IActionResult AddFaculty(string name, string abbreviation,
+            string institute, string dean, string deputy)
+        {
+
+            if ((Request.Cookies["fac_priv"] != "true"))
+                return new UnauthorizedResult();
+            int _dean = -1;
+            int _deputy_dean = -1;
+            NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{dean}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    _dean = Convert.ToInt16(reader.GetValue(0));
+                if (_dean == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+
+            command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{deputy}';", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                NpgsqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    _deputy_dean = Convert.ToInt16(reader.GetValue(0));
+                if (_deputy_dean == -1)
+                    throw new Exception("Невірний користувач");
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult("Такого користувача не існує");
+            }
+            DataBase._connection.Close();
+            command = new NpgsqlCommand($"BEGIN; " +
+                $"insert into tb_faculty (name_faculty, abbreviation_faculty, id_institute, id_user_dean, id_user_deputy_dean) " +
+                $"values ('{name}', '{abbreviation}', (select id_institute from tb_institute where abbreviation_institute = '{institute}'), " +
+                $"{_dean}, {_deputy_dean}); " +
+                $"call addlog({Request.Cookies["id_user"]}, 'add_faculty', 'new_faculty', 'tb_faculty', '{Request.HttpContext.Connection.RemoteIpAddress}', 1); " +
+                $"COMMIT; ", DataBase._connection);
+            DataBase._connection.Open();
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                DataBase._connection.Close();
+                return new BadRequestObjectResult(command.CommandText);
+            }
+            DataBase._connection.Close();
+            return new OkResult();
+        }
         #endregion
 
         #region Institute
