@@ -265,7 +265,7 @@ namespace CourseWork.Controllers
 
         public IActionResult AddChair(string name, string faculty, string chief)
         {
-            if ((Request.Cookies["inst_priv"] != "true"))
+            if ((Request.Cookies["chair_priv"] != "true"))
                 return new UnauthorizedResult();
             int user_id = -1;
             NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{chief}';", DataBase._connection);
@@ -305,7 +305,7 @@ namespace CourseWork.Controllers
 
         public IActionResult UpdateChair(string id, string name, string faculty, string chief)
         {
-            if ((Request.Cookies["inst_priv"] != "true"))
+            if ((Request.Cookies["chair_priv"] != "true"))
                 return new UnauthorizedResult();
             int user_id = -1;
             NpgsqlCommand command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{chief}';", DataBase._connection);
@@ -392,7 +392,7 @@ namespace CourseWork.Controllers
                 DataBase._connection.Close();
                 return new BadRequestObjectResult("Такого користувача не існує");
             }
-
+            DataBase._connection.Close();
             command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{deputy}';", DataBase._connection);
             DataBase._connection.Open();
             try
@@ -454,7 +454,7 @@ namespace CourseWork.Controllers
                 DataBase._connection.Close();
                 return new BadRequestObjectResult("Такого користувача не існує");
             }
-
+            DataBase._connection.Close();
             command = new NpgsqlCommand($"SELECT id_user_info FROM tb_users_info where second_name || ' ' || first_name || ' ' ||  middle_name = '{deputy}';", DataBase._connection);
             DataBase._connection.Open();
             try
