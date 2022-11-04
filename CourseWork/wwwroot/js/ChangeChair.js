@@ -5,6 +5,9 @@ const chief = document.querySelector('#chief');
 const paramsString = document.location.search; // ?page=4&limit=10&sortby=desc  
 const searchParams = new URLSearchParams(paramsString);
 document.querySelector('#saveBtn').addEventListener('click', onSaveClick);
+document.querySelector('#reloadBtn').addEventListener('click', function () {
+    window.location = '';
+})
 
 let id = searchParams.get("id"); // 4
 let modal = new bootstrap.Modal(document.getElementById('operation_success'), { backdrop: true, keyboard: true, focus: true });

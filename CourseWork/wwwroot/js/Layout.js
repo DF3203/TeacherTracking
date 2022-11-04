@@ -47,8 +47,19 @@ try {
     });
 }
 catch { };
+try {
+    document.getElementById('copybtn').addEventListener("click", function () {
+        CopyClick();
+    });
+}
+catch { };
+
+async function CopyClick() {
+    const query = await fetch(`https://localhost:7113/Main/CreateCopy`);
+    async
 //sidebad js
 
+}
 document.querySelector('#mainbtn').addEventListener("click", function() {
     window.location = "Index";
 })

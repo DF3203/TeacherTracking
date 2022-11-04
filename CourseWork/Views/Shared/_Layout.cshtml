@@ -48,9 +48,11 @@
                     {
                             <div id="chairbtn"><a href="#">Кафедри</a></div>
                     }
+                    if ((Context.Request.Cookies["chair_priv"] == "true")&&(Context.Request.Cookies["fac_priv"] == "true")&&(Context.Request.Cookies["inst_priv"] == "true")&&(Context.Request.Cookies["user_priv"]=="true"))
+                    {
+                            <div id="copybtn"><a href="#">Зробити резервну копію</a></div>
+                    }
            }
-                    <div><a href="#">Контакти</a></div>
-                <div><a href="#">Портфоліо</a></div>
                 <div id="exitbtn"><a href="#" >Вийти з системи</a></div>
             </nav>
         </div>

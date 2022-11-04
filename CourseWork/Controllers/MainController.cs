@@ -108,6 +108,12 @@ namespace CourseWork.Controllers
             }
         }
         #endregion
+        public IActionResult CreateCopy()
+        {
+            string command = "\"C:\\Program Files\\PostgreSQL\\11\\bin\\pg_dump.exe\" --dbname=postgresql://postgres:1304@localhost/Teachers > C:\\Users\\viach\\Desktop\\db.dump";
+            System.Diagnostics.Process.Start("cmd.exe", "/C " + command);
+            return new OkResult();
+        }
 
         #region User
         public IActionResult UpdateUser(string name, string surname, string middlename, string phone, string email)

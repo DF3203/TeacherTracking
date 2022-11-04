@@ -4,7 +4,10 @@ const s_name = document.querySelector('#second_name');
 const m_name = document.querySelector('#middle_name');
 const phone = document.querySelector('#phone');
 const email = document.querySelector('#email');
-document.querySelector('#saveBtn').addEventListener('click', onSaveClick)
+document.querySelector('#saveBtn').addEventListener('click', onSaveClick);
+document.querySelector('#reloadBtn').addEventListener('click', function () {
+    window.location = '';
+})
 
 
 
