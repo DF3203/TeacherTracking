@@ -45,14 +45,20 @@ $"WHERE tb_chair.id_chair='{ViewBag.ChairId}'", DataBase._connection);
                             <div class="row mt-3">
                                 <div class="col-md-12"><label class="labels">Назва кафедри</label><textarea id="name" type="text" class="form-control" rows=3 placeholder="Назва кафедри">@result[1]</textarea></div>
                                 <div class="col-md-12">
-                                    <label class="labels">Факультет</label> 
-                                    <input id="faculty" list="facs" type="text" class="form-control" placeholder="Факультет" value="@result[2]">
-                                    <datalist id="facs">
-                                        @foreach (object faculty in faculties)
-                                {
-                                                <option value="@faculty"></option>
-                                }
-                                    </datalist>
+                                    <label class="labels">Факультет</label>
+                    <select id="faculty" class="form-select" aria-label="Виберіть зі списку">
+                        @foreach (object faculty in faculties)
+                        {
+                            if (faculty.ToString() == result[2].ToString())
+                            {
+                                <option selected>@faculty</option>
+                            }
+                            else
+                            {
+                                <option>@faculty</option>
+                            }
+                        }
+                    </select>
                              </div>
                                 <div class="col-md-12">
                                     <label class="labels">Директор</label> 
